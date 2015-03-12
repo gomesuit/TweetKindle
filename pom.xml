@@ -46,6 +46,9 @@
             <directory>src/developW/resources</directory>
           </resource>
           <resource>
+            <directory>src/develop/resources</directory>
+          </resource>
+          <resource>
             <directory>src/main/resources</directory>
           </resource>
         </resources>
