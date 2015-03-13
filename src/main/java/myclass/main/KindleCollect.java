@@ -33,48 +33,31 @@ public class KindleCollect implements Job {
     }
 
     public static void collectBooks() throws Exception{
-        AmazonApiKindle amazonApiKindle = new AmazonApiKindle();
         String searchIndex = "Books";
-        amazonApiKindle.setSearchIndex(searchIndex);
-        amazonApiKindle.setPowerBinding("Kindle版");
+        String powerBinding = "Kindle版";
 
         sortValueList = KindleBO.getSortValue(searchIndex);
         browseNodesList = KindleBO.getBrowseNodes(searchIndex);
-        powerPubdatesList = KindleBO.getPowerPubdates(searchIndex);
-
         for(String sortValue : sortValueList){
-            amazonApiKindle.setSort(sortValue);
-            
             for(String browseNodes : browseNodesList){
-                amazonApiKindle.setBrowseNode(browseNodes);
-                
-                KindleBO.registerKindleList(amazonApiKindle.getKindleList());
+                KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, sortValue, browseNodes, ""));
             }
         }
 
-        amazonApiKindle.setSort("salesrank");
-        amazonApiKindle.setBrowseNode("2278488051");
+        powerPubdatesList = KindleBO.getPowerPubdates(searchIndex);
         for(String powerPubdate : powerPubdatesList){
-            amazonApiKindle.setPowerPubdate(powerPubdate);
-            
-            KindleBO.registerKindleList(amazonApiKindle.getKindleList());
+            KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, "salesrank", "2278488051", powerPubdate));
         }
     }
     public static void collectKindleStore() throws Exception{
-    	AmazonApiKindle amazonApiKindle = new AmazonApiKindle();
         String searchIndex = "KindleStore";
-        amazonApiKindle.setSearchIndex(searchIndex);
-
+        
         sortValueList = KindleBO.getSortValue(searchIndex);
         browseNodesList = KindleBO.getBrowseNodes(searchIndex);
 
         for(String sortValue : sortValueList){
-            amazonApiKindle.setSort(sortValue);
-            
             for(String browseNodes : browseNodesList){
-                amazonApiKindle.setBrowseNode(browseNodes);
-                
-                KindleBO.registerKindleList(amazonApiKindle.getKindleList());
+                KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, "", sortValue, browseNodes, ""));
             }
         }
     }

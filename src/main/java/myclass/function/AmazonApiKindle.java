@@ -14,8 +14,25 @@ import javax.xml.bind.JAXB;
 
 @SuppressWarnings("restriction")
 public class AmazonApiKindle {
+    @SuppressWarnings("unused")
+	private static AmazonApiKindle instance = new AmazonApiKindle();
+    
+    public AmazonApiKindle(){
+    	init();
+    }
+    
+    private static void init(){
+    	AmazonApiRequest.searchIndex ="ALL";
+    	AmazonApiRequest.powerPubdate = "";
+    	AmazonApiRequest.keywords = "*";
+    	AmazonApiRequest.sort = "";
+    	AmazonApiRequest.title = "";
+    	AmazonApiRequest.powerBinding = "";
+    	AmazonApiRequest.browseNode = "";
+    	AmazonApiRequest.pageNum = 1;
+    }
 
-    public List<Kindle> getKindleList() throws Exception{
+    public static List<Kindle> getKindleList() throws Exception{
         List<Kindle> kindleListAll = new ArrayList<Kindle>();
 
         List<Kindle> kindleListOneSet;
@@ -30,7 +47,17 @@ public class AmazonApiKindle {
         return kindleListAll;
     }
 
-    private List<Kindle> cleateKindleListOneSet() throws Exception {
+    public static List<Kindle> getKindleList(String searchIndex, String powerBinding, String sort, String browseNode, String powerPubdate) throws Exception{
+    	init();
+    	AmazonApiRequest.searchIndex ="Books";
+    	AmazonApiRequest.powerBinding = powerBinding;
+    	AmazonApiRequest.sort = sort;
+    	AmazonApiRequest.browseNode = browseNode;
+    	AmazonApiRequest.powerPubdate = powerPubdate;
+        return getKindleList();
+    }
+
+    private static List<Kindle> cleateKindleListOneSet() throws Exception {
         List<Kindle> kindleList = new ArrayList<Kindle>();
         
         String xml = AmazonApiRequest.getResponseXml();
