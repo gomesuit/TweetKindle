@@ -12,8 +12,12 @@ import java.io.StringReader;
 
 import javax.xml.bind.JAXB;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @SuppressWarnings("restriction")
 public class AmazonApiKindle {
+    private static Logger logger = LogManager.getLogger(AmazonApiKindle.class);
     @SuppressWarnings("unused")
 	private static AmazonApiKindle instance = new AmazonApiKindle();
     
@@ -49,11 +53,12 @@ public class AmazonApiKindle {
 
     public static List<Kindle> getKindleList(String searchIndex, String powerBinding, String sort, String browseNode, String powerPubdate) throws Exception{
     	init();
-    	AmazonApiRequest.searchIndex ="Books";
+    	AmazonApiRequest.searchIndex =searchIndex;
     	AmazonApiRequest.powerBinding = powerBinding;
     	AmazonApiRequest.sort = sort;
     	AmazonApiRequest.browseNode = browseNode;
     	AmazonApiRequest.powerPubdate = powerPubdate;
+        logger.info("getKindleList: {}", searchIndex, powerBinding, sort, browseNode, powerPubdate);
         return getKindleList();
     }
 

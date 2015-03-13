@@ -91,7 +91,7 @@ public class AmazonApiRequest {
         String requestUrl = createRequestUrl();
         
         int id = KindleBO.requestLog(requestUrl);
-        logger.info("REQUEST LOG Number = {}", id);
+        //logger.info("REQUEST LOG Number = {}", id);
 
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         DocumentBuilder db = dbf.newDocumentBuilder();
@@ -101,7 +101,7 @@ public class AmazonApiRequest {
                 doc = db.parse(requestUrl);
                 break;
             }catch(java.io.IOException e){
-                logger.info("503 ERROR RETRY : {}", id, i);
+                //logger.info("503 ERROR RETRY : {}", id, i);
                 Thread.sleep(SLEEP_TIME);
             }
         }

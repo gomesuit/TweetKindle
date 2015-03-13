@@ -34,6 +34,7 @@ public class RegistScheduler {
             	JobDetail jobDetail = createjobDetail(jobName, jobclass);
             	CronTrigger cronTrigger = createCronTrigger(jobName, jobSchedule);
             	createScheduler(jobDetail, cronTrigger);
+            	logger.info("Registration of JOB has been completed successfully. {}", jobName, jobclass, jobSchedule);
             }
     	}catch(Exception e){
             logger.error("Exception of RegistScheduler", e);
@@ -45,7 +46,6 @@ public class RegistScheduler {
     	Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
     	scheduler.scheduleJob(jobDetail, cronTrigger);
     	scheduler.start();
-        logger.info("Registration of JOB has been completed successfully. {}", jobDetail, cronTrigger);
 	}
 
 	private static CronTrigger createCronTrigger(String triggerName, String triggerSchedule) {		
