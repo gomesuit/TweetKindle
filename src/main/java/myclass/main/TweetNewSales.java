@@ -56,7 +56,7 @@ public class TweetNewSales implements Job
 	            }
 	            
 				Status status = twitter.updateStatus(update);
-	            logger.info("新着ツイートが正常終了しました。{}", status);
+	            logger.info("新着ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
 	        }catch(Exception e){
 	            String message = "";
 	            message = message + "ASIN:" + map.get("asin") + "\n";

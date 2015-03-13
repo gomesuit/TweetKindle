@@ -56,7 +56,7 @@ public class TweetTodaySales implements Job
 	            }
 	            
 				Status status = twitter.updateStatus(update);
-	            logger.info("本日発売ツイートが正常終了しました。{}", status);
+	            logger.info("本日発売ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
 	        }catch(Exception e){
 	            String message = "";
 	            message = message + "ASIN:" + map.get("asin") + "\n";
