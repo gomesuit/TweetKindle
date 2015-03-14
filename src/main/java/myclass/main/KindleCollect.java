@@ -38,16 +38,20 @@ public class KindleCollect implements Job {
 
         sortValueList = KindleBO.getSortValue(searchIndex);
         browseNodesList = KindleBO.getBrowseNodes(searchIndex);
+        powerPubdatesList = KindleBO.getPowerPubdates(searchIndex);
         for(String sortValue : sortValueList){
             for(String browseNodes : browseNodesList){
-                KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, sortValue, browseNodes, ""));
+                for(String powerPubdate : powerPubdatesList){
+                    KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, sortValue, browseNodes, powerPubdate));
+                }
+                //KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, sortValue, browseNodes, ""));
             }
         }
 
-        powerPubdatesList = KindleBO.getPowerPubdates(searchIndex);
-        for(String powerPubdate : powerPubdatesList){
-            KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, "salesrank", "2278488051", powerPubdate));
-        }
+        //powerPubdatesList = KindleBO.getPowerPubdates(searchIndex);
+        //for(String powerPubdate : powerPubdatesList){
+        //    KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, "salesrank", "2278488051", powerPubdate));
+        //}
     }
     
     public static void collectKindleStore() throws Exception{
