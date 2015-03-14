@@ -1,30 +1,17 @@
 package myclass.function;
 
-import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import myclass.bo.KindleBO;
 import myclass.config.MyConfig;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.w3c.dom.Document;
 import com.amazon.advertising.api.sample.SignedRequestsHelper;
 
-
-public class AmazonApiRequest {
-    private static Logger logger = LogManager.getLogger(AmazonApiRequest.class);
+public class AmazonApiRequestItemSearch {
+    private static Logger logger = LogManager.getLogger(AmazonApiRequestItemSearch.class);
     
 	protected static final String SERVICE = "AWSECommerceService";
 	protected static final String ENDPOINT = "webservices.amazon.co.jp";
@@ -47,7 +34,7 @@ public class AmazonApiRequest {
 	protected static Integer pageNum = 1;
 
     @SuppressWarnings("unused")
-	private static AmazonApiRequest instance = new AmazonApiRequest();
+	private static AmazonApiRequestItemSearch instance = new AmazonApiRequestItemSearch();
 	
     private static Map<String, String> createParams(){
         Map<String, String> params = new HashMap<String, String>();
@@ -87,37 +74,9 @@ public class AmazonApiRequest {
     }
 
     public static String getResponseXml() throws Exception{
-        String responseXml = null;
         String requestUrl = createRequestUrl();
-        
-        int id = KindleBO.requestLog(requestUrl);
-        //logger.info("REQUEST LOG Number = {}", id);
-
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        DocumentBuilder db = dbf.newDocumentBuilder();
-        Document doc = db.newDocument();
-        for(int i = 0; i < RETRY_COUNT; i++){
-            try{
-                doc = db.parse(requestUrl);
-                break;
-            }catch(java.io.IOException e){
-                //logger.info("503 ERROR RETRY : {}", id, i);
-                Thread.sleep(SLEEP_TIME);
-            }
-        }
-        DOMSource source = new DOMSource(doc);
-        StringWriter swriter = new StringWriter();
-        StreamResult result = new StreamResult(swriter);
-        transform(source, result);
-        responseXml = swriter.toString();
-        
-        return responseXml;
-    }
-
-    private static void transform(Source source, Result result) throws TransformerException{
-       TransformerFactory tff = TransformerFactory.newInstance();
-       Transformer tf = tff.newTransformer();
-       tf.transform(source, result);
+        KindleBO.requestLog(requestUrl);
+        return MyHttpGet.getResponseXml(requestUrl);
     }
     
     public static String getPowerStr(){
@@ -134,84 +93,5 @@ public class AmazonApiRequest {
 
         return powerStr;
     }
-
-	public String getSearchIndex() {
-		return searchIndex;
-	}
-
-
-	public void setSearchIndex(String searchIndex) {
-		AmazonApiRequest.searchIndex = searchIndex;
-	}
-
-
-	public String getPowerPubdate() {
-		return powerPubdate;
-	}
-
-
-	public void setPowerPubdate(String powerPubdate) {
-		AmazonApiRequest.powerPubdate = powerPubdate;
-	}
-
-
-	public String getKeywords() {
-		return keywords;
-	}
-
-
-	public void setKeywords(String keywords) {
-		AmazonApiRequest.keywords = keywords;
-	}
-
-
-	public String getSort() {
-		return sort;
-	}
-
-
-	public void setSort(String sort) {
-		AmazonApiRequest.sort = sort;
-	}
-
-
-	public String getTitle() {
-		return title;
-	}
-
-
-	public void setTitle(String title) {
-		AmazonApiRequest.title = title;
-	}
-
-
-	public String getPowerBinding() {
-		return powerBinding;
-	}
-
-
-	public void setPowerBinding(String powerBinding) {
-		AmazonApiRequest.powerBinding = powerBinding;
-	}
-
-
-	public String getBrowseNode() {
-		return browseNode;
-	}
-
-
-	public void setBrowseNode(String browseNode) {
-		AmazonApiRequest.browseNode = browseNode;
-	}
-
-
-	public Integer getPageNum() {
-		return pageNum;
-	}
-
-
-	public void setPageNum(Integer pageNum) {
-		AmazonApiRequest.pageNum = pageNum;
-	}
 
 }
