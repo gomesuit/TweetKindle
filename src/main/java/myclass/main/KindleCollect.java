@@ -49,6 +49,7 @@ public class KindleCollect implements Job {
             KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, "salesrank", "2278488051", powerPubdate));
         }
     }
+    
     public static void collectKindleStore() throws Exception{
         String searchIndex = "KindleStore";
         
