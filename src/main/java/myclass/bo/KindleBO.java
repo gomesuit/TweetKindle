@@ -52,7 +52,7 @@ public class KindleBO {
 
     public static void registerKindleList(List<Kindle> kindleList){
         for (Kindle kindle : kindleList){
-        	logger.info(kindle.getTitle());
+        	//logger.info(kindle.getTitle());
             registerKindle(kindle);
         }
     }
