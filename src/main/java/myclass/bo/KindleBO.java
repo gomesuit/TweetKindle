@@ -101,6 +101,14 @@ public class KindleBO {
         return Integer.parseInt(map.get("id"));
     }
 
+    public static Map<String,String> getMinTweetTop3(){
+        return kindleMapper.selectMinTweetTop3();
+    }
+
+    public static void countupTweetTop3(String description){
+        kindleMapper.countupTweetTop3(description);
+    }
+
     //private static String getDateTime(){
     //    Calendar calendar = Calendar.getInstance();
     //    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");

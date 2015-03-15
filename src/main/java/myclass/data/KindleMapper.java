@@ -20,4 +20,6 @@ public interface KindleMapper {
   void updateTweetShinchaku(String asin);
   Map<String,String> selectKindleTodaySales();
   void updateTweetTodaySales(String asin);
+  Map<String,String> selectMinTweetTop3();
+  void countupTweetTop3(String description);
 }

@@ -171,4 +171,23 @@
 		where
 			asin = #{asin}
 	</update>
+	
+	<select id="selectMinTweetTop3" resultType="java.util.Map">
+		select
+			description,
+			url
+		from
+			TWEETTOP3
+		where
+			TweetCount = (select min(TweetCount) from TWEETTOP3) LIMIT 1
+	</select>
+
+	<update id="countupTweetTop3" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
+		update
+			TWEETTOP3
+		set
+			TweetCount = (select TweetCount from TWEETTOP3 where description = #{description}) + 1
+		where
+			description = #{description}
+	</update>
 </mapper>
