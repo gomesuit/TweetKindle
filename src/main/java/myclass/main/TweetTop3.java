@@ -77,7 +77,7 @@ public class TweetTop3 implements Job {
 				StatusUpdate update = new StatusUpdate(tweetContent);
 				update.setMediaIds(mediaIds);
 				Status status = twitter.updateStatus(update);
-				
+				KindleBO.countupTweetTop3(description);
 				logger.info(headerTitle + "ツイート正常終了 \n{}", tweetContent);
 	    	}catch(Exception e){
 	            String message = "";
@@ -90,7 +90,7 @@ public class TweetTop3 implements Job {
 	            logger.error("Exception of TweetTop3", e);
 	    	}
 		}else{
-			logger.info("最終ツイートから１時間経過してません。");
+			logger.info("最終ツイートから2時間経過してません。");
 		}
 		
     }
