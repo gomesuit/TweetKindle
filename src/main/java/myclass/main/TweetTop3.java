@@ -44,57 +44,54 @@ public class TweetTop3 implements Job {
     	logger.info("【Kindleベストセラー】ツイート処理開始");
     	String headerTitle = "【Kindleベストセラー】";
     	String description = "";
-    	
-    	try{
-    		if(isTweet()){
-    			Map<String,String> map = KindleBO.getMinTweetTop3();
-    			description = map.get("description");
-    			headerTitle = "【Kindle" + description + "ベストセラー】";
-    			
-    	    	String xml = MyHttpGet.getResponseXml(map.get("url"));
-    	        AmazonBestsellersRss amazonBestsellersRss = JAXB.unmarshal(new StringReader(xml), AmazonBestsellersRss.class);
-    	        
-    	        List<Item> itemList = amazonBestsellersRss.getChannel().getItem();
-    	        
-    	        List<Kindle> KindleList = new ArrayList<Kindle>();;
-    	        KindleList.add(AmazonApiKindle.getKindle(itemList.get(0).getAsin()));
-    	        KindleList.add(AmazonApiKindle.getKindle(itemList.get(1).getAsin()));
-    	        KindleList.add(AmazonApiKindle.getKindle(itemList.get(2).getAsin()));
-    	        
-    	        Twitter twitter = new TwitterFactory().getInstance();
-    	        long[] mediaIds = new long[3];
-    	        String tweetContent = headerTitle + "　#Kindle\n";
-    	        
-    	        int i = 0;
-    			for(Kindle kindle : KindleList){
-    		        String filePath = DownloadImage.getImagePath(kindle.getLargeImage(), kindle.getAsin());
-    		        UploadedMedia media = twitter.uploadMedia(new File(filePath));
-    		        mediaIds[i] = media.getMediaId();
-    	            //String shortUrl = GoogleURLShortener.getShortUrl(kindle.getDetailPageURL());
-    		        tweetContent = tweetContent + " ［" + String.valueOf(i+1) + "］" + cutStr(kindle.getTitle(), 20) + "\n";
-    				i++;
-    			}
-    			
-    			StatusUpdate update = new StatusUpdate(tweetContent);
-    			update.setMediaIds(mediaIds);
-    			Status status = twitter.updateStatus(update);
-    			
-    			logger.info(headerTitle + "ツイート正常終了 \n{}", tweetContent);
-    		}else{
-    			logger.info("最終ツイートから１時間経過してません。");
-    		}
-    	}catch(Exception e){
-            String message = "";
-            message = message + "エラー内容:" + "\n" + e;
-            try {
-				MyMail.sendMail(headerTitle + "ツイートエラー通知", message);
-			} catch (Exception e1) {
-				logger.error("failed to send mail", e1);
-			}
-            logger.error("Exception of TweetTop3", e);
-    	}finally{
-    		KindleBO.countupTweetTop3(description);
-    	}
+		if(isTweet()){
+	    	try{
+				Map<String,String> map = KindleBO.getMinTweetTop3();
+				description = map.get("description");
+				headerTitle = "【Kindle" + description + "ベストセラー】";
+				
+		    	String xml = MyHttpGet.getResponseXml(map.get("url"));
+		        AmazonBestsellersRss amazonBestsellersRss = JAXB.unmarshal(new StringReader(xml), AmazonBestsellersRss.class);
+		        
+		        List<Item> itemList = amazonBestsellersRss.getChannel().getItem();
+		        
+		        List<Kindle> KindleList = new ArrayList<Kindle>();;
+		        KindleList.add(AmazonApiKindle.getKindle(itemList.get(0).getAsin()));
+		        KindleList.add(AmazonApiKindle.getKindle(itemList.get(1).getAsin()));
+		        KindleList.add(AmazonApiKindle.getKindle(itemList.get(2).getAsin()));
+		        
+		        Twitter twitter = new TwitterFactory().getInstance();
+		        long[] mediaIds = new long[3];
+		        String tweetContent = headerTitle + "　#Kindle\n";
+		        
+		        int i = 0;
+				for(Kindle kindle : KindleList){
+			        String filePath = DownloadImage.getImagePath(kindle.getLargeImage(), kindle.getAsin());
+			        UploadedMedia media = twitter.uploadMedia(new File(filePath));
+			        mediaIds[i] = media.getMediaId();
+		            //String shortUrl = GoogleURLShortener.getShortUrl(kindle.getDetailPageURL());
+			        tweetContent = tweetContent + " ［" + String.valueOf(i+1) + "］" + cutStr(kindle.getTitle(), 20) + "\n";
+					i++;
+				}
+				
+				StatusUpdate update = new StatusUpdate(tweetContent);
+				update.setMediaIds(mediaIds);
+				Status status = twitter.updateStatus(update);
+				
+				logger.info(headerTitle + "ツイート正常終了 \n{}", tweetContent);
+	    	}catch(Exception e){
+	            String message = "";
+	            message = message + "エラー内容:" + "\n" + e;
+	            try {
+					MyMail.sendMail(headerTitle + "ツイートエラー通知", message);
+				} catch (Exception e1) {
+					logger.error("failed to send mail", e1);
+				}
+	            logger.error("Exception of TweetTop3", e);
+	    	}
+		}else{
+			logger.info("最終ツイートから１時間経過してません。");
+		}
 		
     }
     
@@ -106,8 +103,14 @@ public class TweetTop3 implements Job {
     	}
     }
     
-    private static boolean isTweet() throws TwitterException{
-    	long LastTweetDate = MyTwitterApi.getLastTweetDate().getTime();
+    private static boolean isTweet(){
+    	long LastTweetDate;
+    	try{
+        	LastTweetDate = MyTwitterApi.getLastTweetDate().getTime();
+    	}catch(TwitterException e){
+    		logger.error("Exception of getLastTweetDate", e);
+        	LastTweetDate = new Date().getTime();;
+    	}
     	long nowDate = new Date().getTime();
     	long one_hour_time = 1000 * 60 * 60;
     	long diffHour = (nowDate - LastTweetDate) / one_hour_time;
