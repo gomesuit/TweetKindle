@@ -36,7 +36,6 @@ public class TweetNewSales implements Job
     	}else{
     		map = KindleBO.getKindleShinchaku();
     	}
-    	map = KindleBO.getKindleShinchaku();
 
         if(map == null){
             logger.info("新着が一件もありませんでした。");

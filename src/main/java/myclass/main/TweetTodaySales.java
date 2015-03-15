@@ -36,7 +36,6 @@ public class TweetTodaySales implements Job
     	}else{
     		map = KindleBO.getKindleTodaySale();
     	}
-    	map = KindleBO.getKindleTodaySale();
 
         if(map == null){
             logger.info("検索結果は一件もありませんでした。");

@@ -43,11 +43,13 @@ public class TweetTop3 implements Job {
     public static void main(String[] args) {
     	logger.info("【Kindleベストセラー】ツイート処理開始");
     	String headerTitle = "【Kindleベストセラー】";
+    	String description = "";
     	
     	try{
-    		if(!isTweet()){
+    		if(isTweet()){
     			Map<String,String> map = KindleBO.getMinTweetTop3();
-    			headerTitle = "【Kindle" + map.get("description") + "ベストセラー】";
+    			description = map.get("description");
+    			headerTitle = "【Kindle" + description + "ベストセラー】";
     			
     	    	String xml = MyHttpGet.getResponseXml(map.get("url"));
     	        AmazonBestsellersRss amazonBestsellersRss = JAXB.unmarshal(new StringReader(xml), AmazonBestsellersRss.class);
@@ -69,14 +71,14 @@ public class TweetTop3 implements Job {
     		        UploadedMedia media = twitter.uploadMedia(new File(filePath));
     		        mediaIds[i] = media.getMediaId();
     	            //String shortUrl = GoogleURLShortener.getShortUrl(kindle.getDetailPageURL());
-    		        tweetContent = tweetContent + String.valueOf(i+1) + ".『" + cutStr(kindle.getTitle(), 20) + "』\n";
+    		        tweetContent = tweetContent + " ［" + String.valueOf(i+1) + "］" + cutStr(kindle.getTitle(), 20) + "\n";
     				i++;
     			}
     			
     			StatusUpdate update = new StatusUpdate(tweetContent);
     			update.setMediaIds(mediaIds);
     			Status status = twitter.updateStatus(update);
-    			KindleBO.countupTweetTop3(map.get("description"));
+    			
     			logger.info(headerTitle + "ツイート正常終了 \n{}", tweetContent);
     		}else{
     			logger.info("最終ツイートから１時間経過してません。");
@@ -90,6 +92,8 @@ public class TweetTop3 implements Job {
 				logger.error("failed to send mail", e1);
 			}
             logger.error("Exception of TweetTop3", e);
+    	}finally{
+    		KindleBO.countupTweetTop3(description);
     	}
 		
     }
