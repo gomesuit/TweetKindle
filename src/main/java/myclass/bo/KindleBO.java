@@ -74,7 +74,7 @@ public class KindleBO {
     }
 
     public static Map<String,String> getKindleShinchaku(){
-        return kindleMapper.selectKindleShinchaku();
+        return kindleMapper.selectKindleShinchaku(getExclusion());
     }
 
     public static Map<String,String> getKindle(String asin){
@@ -86,7 +86,7 @@ public class KindleBO {
     }
 
     public static Map<String,String> getKindleTodaySale(){
-        return kindleMapper.selectKindleTodaySales();
+        return kindleMapper.selectKindleTodaySales(getExclusion());
     }
 
     public static void updateTweetTodaySales(String asin){
@@ -107,6 +107,10 @@ public class KindleBO {
 
     public static void countupTweetTop3(String description){
         kindleMapper.countupTweetTop3(description);
+    }
+
+    public static List<String> getExclusion(){
+        return kindleMapper.selectExclusion();
     }
 
     //private static String getDateTime(){

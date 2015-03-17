@@ -123,12 +123,47 @@
 
 	<select id="selectKindleShinchaku" resultType="java.util.Map">
 		select
-			asin,
-			title,
-			releaseDate,
-			detailPageURL,
-			largeImage
-		from KindleShinchaku LIMIT 1
+			K.asin,
+			K.title,
+			K.releaseDate,
+			K.detailPageURL,
+			K.largeImage
+		from
+			Kindle K, KindleRegist R
+		where
+			K.asin = R.asin and 
+			K.releaseDate > strftime('%Y-%m-%d', datetime('now', 'localtime')) and
+			strftime('%Y-%m-%d', R.insertTime) >= strftime('%Y-%m-%d', datetime('now', 'localtime')) and
+			R.tweetFlg = 0
+			<foreach item="word" collection="list">
+				<bind name="pattern" value="'%' + word + '%'" />
+				and K.title not like #{pattern}
+			</foreach>
+		order by
+			K.asin desc
+		LIMIT 1
+	</select>
+	
+	<select id="selectKindleTodaySales" resultType="java.util.Map">
+		select
+			K.asin,
+			K.title,
+			K.releaseDate,
+			K.detailPageURL,
+			K.largeImage
+		from
+			Kindle K, KindleRegist R
+		where
+			K.asin = R.asin and 
+			K.releaseDate = strftime('%Y-%m-%d', datetime('now', 'localtime')) and
+			R.tweetFlg2 = 0
+			<foreach item="word" collection="list">
+				<bind name="pattern" value="'%' + word + '%'" />
+				and K.title not like #{pattern}
+			</foreach>
+		order by
+			K.asin desc
+		LIMIT 1
 	</select>
 	
 	<select id="selectKindle" resultType="java.util.Map">
@@ -152,16 +187,6 @@
 		where
 			asin = #{asin}
 	</update>
-	
-	<select id="selectKindleTodaySales" resultType="java.util.Map">
-		select
-			asin,
-			title,
-			releaseDate,
-			detailPageURL,
-			largeImage
-		from KindleTodaySales LIMIT 1
-	</select>
 
 	<update id="updateTweetTodaySales" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
 		update
@@ -190,4 +215,13 @@
 		where
 			description = #{description}
 	</update>
+	
+	<select id="selectExclusion" resultType="java.lang.String">
+		select
+			word
+		from
+			EXCLUSION
+		where
+			active = 1
+	</select>
 </mapper>

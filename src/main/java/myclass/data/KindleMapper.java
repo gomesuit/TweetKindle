@@ -1,6 +1,7 @@
 package myclass.data;
 
 import myclass.model.Kindle;
+
 import java.util.List;
 import java.util.Map;
 
@@ -15,11 +16,12 @@ public interface KindleMapper {
   void insertKindleRegist(String asin);
   void updateKindleRegist(String asin);
   List<Kindle> selectTodayKindleList(String date);
-  Map<String,String> selectKindleShinchaku();
+  Map<String,String> selectKindleShinchaku(List<String> wordList);
   Map<String,String> selectKindle(String asin);
   void updateTweetShinchaku(String asin);
-  Map<String,String> selectKindleTodaySales();
+  Map<String,String> selectKindleTodaySales(List<String> wordList);
   void updateTweetTodaySales(String asin);
   Map<String,String> selectMinTweetTop3();
   void countupTweetTop3(String description);
+  List<String> selectExclusion();
 }

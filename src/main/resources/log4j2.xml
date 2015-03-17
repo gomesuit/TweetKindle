@@ -27,10 +27,14 @@
             <AppenderRef ref="RollingFile" />
         </Logger>
          -->
-        <Root level="trace">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="File" />
-            <AppenderRef ref="RollingFile" />
-        </Root>
+	  <!-- SQLログを出力 -->
+	<Logger name="myclass.data" level="debug" additivity="false">
+		<AppenderRef ref="Console"/>
+	</Logger>
+	<Root level="info">
+	    <AppenderRef ref="Console"/>
+	    <AppenderRef ref="File" />
+	    <AppenderRef ref="RollingFile" />
+	</Root>
   </Loggers>
 </Configuration>
