@@ -15,6 +15,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.session.TransactionIsolationLevel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,7 +34,7 @@ public class KindleBO {
         try{
             inputStream = Resources.getResourceAsStream(MYBATIS_CONFIG);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-            session = sqlSessionFactory.openSession(true);
+            session = sqlSessionFactory.openSession(TransactionIsolationLevel.READ_COMMITTED);
             kindleMapper = session.getMapper(KindleMapper.class);
         }catch(java.io.IOException e){
         	logger.error("create instance error {}", e);
