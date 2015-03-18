@@ -136,8 +136,7 @@
 			strftime('%Y-%m-%d', R.insertTime) >= strftime('%Y-%m-%d', datetime('now', 'localtime')) and
 			R.tweetFlg = 0
 			<foreach item="word" collection="list">
-				<bind name="pattern" value="'%' + word + '%'" />
-				and K.title not like #{pattern}
+				and K.title not like #{word}
 			</foreach>
 		order by
 			K.asin desc
@@ -158,8 +157,7 @@
 			K.releaseDate = strftime('%Y-%m-%d', datetime('now', 'localtime')) and
 			R.tweetFlg2 = 0
 			<foreach item="word" collection="list">
-				<bind name="pattern" value="'%' + word + '%'" />
-				and K.title not like #{pattern}
+				and K.title not like #{word}
 			</foreach>
 		order by
 			K.asin desc
@@ -218,7 +216,7 @@
 	
 	<select id="selectExclusion" resultType="java.lang.String">
 		select
-			word
+			'%'||word||'%'
 		from
 			EXCLUSION
 		where
