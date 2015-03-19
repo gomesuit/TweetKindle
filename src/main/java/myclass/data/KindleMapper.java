@@ -24,4 +24,7 @@ public interface KindleMapper {
   Map<String,String> selectMinTweetTop3();
   void countupTweetTop3(String description);
   List<String> selectExclusion();
+  void insertNoImage(String asin);
+  String selectNoImage();
+  void deleteNoImage(String asin);
 }

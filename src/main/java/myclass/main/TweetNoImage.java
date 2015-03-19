@@ -19,31 +19,26 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-public class TweetNewSales implements Job 
+public class TweetNoImage implements Job 
 {
-    private static Logger logger = LogManager.getLogger(TweetNewSales.class);
+    private static Logger logger = LogManager.getLogger(TweetNoImage.class);
     
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		String[] args = {};
-		TweetNewSales.main(args);
+		TweetNoImage.main(args);
 	}
     
     public static void main( String[] args ){
-    	
-    	Map<String,String> map;
-    	if(args.length != 0){
-    		map = KindleBO.getKindle(args[0]);
+    	String asin = KindleBO.getNoImage();
+    	if(asin == null){
+    		logger.info("画像更新が一件もありませんでした。");
     	}else{
-    		map = KindleBO.getKindleShinchaku();
-    	}
-
-        if(map == null){
-            logger.info("新着が一件もありませんでした。");
-        }else{
+        	
+        	Map<String,String> map = KindleBO.getKindle(asin);
 	        try{
 	            Twitter twitter = new TwitterFactory().getInstance();
 	            String shortUrl = GoogleURLShortener.getShortUrl(map.get("detailPageURL"));
-	            String tweetContent = "【新着情報！】　#Kindle\n";
+	            String tweetContent = "【画像更新】　#Kindle\n";
 	            tweetContent = tweetContent + "『" + map.get("title") + "』\n";
 	            tweetContent = tweetContent + "発売日：" + map.get("releaseDate") + "\n";
 	            tweetContent = tweetContent + shortUrl;
@@ -57,21 +52,21 @@ public class TweetNewSales implements Job
 	            }
 	            
 				Status status = twitter.updateStatus(update);
-	            logger.info("新着ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
+	            logger.info("画像更新ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
 	        }catch(Exception e){
 	            String message = "";
 	            message = message + "ASIN:" + map.get("asin") + "\n";
 	            message = message + "TITLE:" + map.get("title") + "\n";
 	            message = message + "エラー内容:" + "\n" + e;
 	            try {
-					MyMail.sendMail("新着ツイートエラー通知", message);
+					MyMail.sendMail("画像更新ツイートエラー通知", message);
 				} catch (Exception e1) {
 					logger.error("failed to send mail", e1);
 				}
-	            logger.error("Exception of TweetNewSales", e);
+	            logger.error("Exception of TweetNoImage", e);
 	        }finally{
-	            KindleBO.updateTweetShinchaku(map.get("asin"));
+	            KindleBO.deleteNoImage(map.get("asin"));
 	        }
-        }
+    	}
     }
 }

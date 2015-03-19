@@ -222,4 +222,23 @@
 		where
 			active = 1
 	</select>
+	
+	<insert id="insertNoImage" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
+		insert into NOIMAGE (asin) values (#{asin})
+	</insert>
+	
+	<select id="selectNoImage" resultType="java.lang.String">
+		select
+			N.asin
+		from
+			NOIMAGE N, Kindle K
+		where
+			K.asin = N.asin and
+			K.largeImage != ""
+		LIMIT 1
+	</select>
+	
+	<delete id="deleteNoImage" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
+		delete from NOIMAGE where asin = #{asin}
+	</delete>
 </mapper>

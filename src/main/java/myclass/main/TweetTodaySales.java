@@ -52,6 +52,8 @@ public class TweetTodaySales implements Job
 	            if(map.get("largeImage").length() != 0){
 	    	        String filePath = DownloadImage.getImagePath(map.get("largeImage"), map.get("asin"));
 	    	        update.setMedia(new File(filePath));
+	            }else{
+	            	KindleBO.registerNoImage(map.get("asin"));
 	            }
 	            
 				Status status = twitter.updateStatus(update);

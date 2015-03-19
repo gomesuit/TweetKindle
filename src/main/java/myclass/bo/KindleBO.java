@@ -113,6 +113,18 @@ public class KindleBO {
         return kindleMapper.selectExclusion();
     }
 
+    public static void registerNoImage(String asin){
+        kindleMapper.insertNoImage(asin);
+    }
+
+    public static String getNoImage(){
+        return kindleMapper.selectNoImage();
+    }
+
+    public static void deleteNoImage(String asin){
+        kindleMapper.deleteNoImage(asin);
+    }
+
     //private static String getDateTime(){
     //    Calendar calendar = Calendar.getInstance();
     //    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
