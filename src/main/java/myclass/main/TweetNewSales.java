@@ -44,7 +44,7 @@ public class TweetNewSales implements Job
 	            Twitter twitter = new TwitterFactory().getInstance();
 	            String shortUrl = GoogleURLShortener.getShortUrl(map.get("detailPageURL"));
 	            String tweetContent = "【新着情報！】　#Kindle\n";
-	            tweetContent = tweetContent + "『" + map.get("title") + "』\n";
+	            tweetContent = tweetContent + "『" + cutStr(map.get("title"), 60) + "』\n";
 	            tweetContent = tweetContent + "発売日：" + map.get("releaseDate") + "\n";
 	            tweetContent = tweetContent + shortUrl;
 	    	    StatusUpdate update = new StatusUpdate(tweetContent);
@@ -73,5 +73,13 @@ public class TweetNewSales implements Job
 	            KindleBO.updateTweetShinchaku(map.get("asin"));
 	        }
         }
+    }
+
+    private static String cutStr(String str, int num){
+    	if(str.length() <= num){
+    		return str;
+    	}else{
+    		return str.substring(0,num) + "…";
+    	}
     }
 }
