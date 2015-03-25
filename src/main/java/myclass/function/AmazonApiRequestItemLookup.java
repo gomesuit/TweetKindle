@@ -37,7 +37,7 @@ public class AmazonApiRequestItemLookup {
         params.put("Operation", OPERATION);
         params.put("Condition", CONDITION);
         params.put("ResponseGroup", RESPONSEGROUP);
-        //params.put("AssociateTag", ASSOCIATE_TAG);
+        params.put("AssociateTag", ASSOCIATE_TAG);
         params.put("ItemId", ItemId);
 
         return params;
