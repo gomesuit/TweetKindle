@@ -44,7 +44,7 @@ public class AmazonApiRequestItemSearch {
         params.put("Operation", OPERATION);
         params.put("Condition", CONDITION);
         params.put("ResponseGroup", RESPONSEGROUP);
-        params.put("AssociateTag", ASSOCIATE_TAG);
+        //params.put("AssociateTag", ASSOCIATE_TAG);
         params.put("SearchIndex", searchIndex);
         params.put("ItemPage", pageNum.toString());
         params.put("Keywords", keywords);

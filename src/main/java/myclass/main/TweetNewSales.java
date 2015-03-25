@@ -49,12 +49,13 @@ public class TweetNewSales implements Job
 	            tweetContent = tweetContent + shortUrl;
 	    	    StatusUpdate update = new StatusUpdate(tweetContent);
 	
-	            if(map.get("largeImage").length() != 0){
+/*	            if(map.get("largeImage").length() != 0){
 	    	        String filePath = DownloadImage.getImagePath(map.get("largeImage"), map.get("asin"));
 	    	        update.setMedia(new File(filePath));
 	            }else{
 	            	KindleBO.registerNoImage(map.get("asin"));
-	            }
+	            }*/
+            	KindleBO.registerNoImage(map.get("asin"));
 	            
 				Status status = twitter.updateStatus(update);
 	            logger.info("新着ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
