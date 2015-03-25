@@ -10,5 +10,7 @@
 			jobSchedule
 		FROM
 			SCHEDULER
+		WHERE
+			active = 1
 	</select>
 </mapper>
