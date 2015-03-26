@@ -50,7 +50,7 @@ public class TweetNoImage implements Job
 	            }else{
 	            	KindleBO.registerNoImage(map.get("asin"));
 	            }*/
-            	KindleBO.registerNoImage(map.get("asin"));
+            	//KindleBO.registerNoImage(map.get("asin"));
 	            
 				Status status = twitter.updateStatus(update);
 	            logger.info("画像更新ツイートが正常終了しました。{}", map.get("asin"), tweetContent);

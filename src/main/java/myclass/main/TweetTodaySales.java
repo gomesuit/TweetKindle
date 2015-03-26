@@ -55,7 +55,7 @@ public class TweetTodaySales implements Job
 	            }else{
 	            	KindleBO.registerNoImage(map.get("asin"));
 	            }*/
-            	KindleBO.registerNoImage(map.get("asin"));
+            	//KindleBO.registerNoImage(map.get("asin"));
 	            
 				Status status = twitter.updateStatus(update);
 	            logger.info("本日発売ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
