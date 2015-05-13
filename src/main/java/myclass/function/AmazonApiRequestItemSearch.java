@@ -75,7 +75,7 @@ public class AmazonApiRequestItemSearch {
 
     public static String getResponseXml() throws Exception{
         String requestUrl = createRequestUrl();
-        KindleBO.requestLog(requestUrl);
+        //KindleBO.requestLog(requestUrl);
         return MyHttpGet.getResponseXml(requestUrl);
     }
     
