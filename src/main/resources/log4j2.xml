@@ -7,7 +7,7 @@
 	<File name="File" fileName="logs/normal_app.log">
       <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} | [%t] | %-5level | %c{36} | %msg%n"/>
 	</File>
-    <RollingFile name="RollingFile" fileName="logs/rolling\_app.log" filePattern="logs/rolling\_app\_%d{yyyy-MM-dd}.log.gz">
+    <RollingFile name="RollingFile" fileName="logs/rolling_app.log" filePattern="logs/rolling_app_%d{yyyy-MM-dd}.log.gz">
       <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} | [%t] | %-5level | %c{36} | %msg%n"/>
       <Policies>
         <TimeBasedTriggeringPolicy />
@@ -29,6 +29,9 @@
          -->
 	  <!-- SQLログを出力 -->
 	<Logger name="myclass.data" level="debug" additivity="false">
+		<AppenderRef ref="Console"/>
+	</Logger>
+	<Logger name="myclass.function" level="debug" additivity="false">
 		<AppenderRef ref="Console"/>
 	</Logger>
 	<Root level="info">

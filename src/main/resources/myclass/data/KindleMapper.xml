@@ -22,7 +22,8 @@
 							title,
 							content,
 							detailPageURL,
-							largeImage)
+							largeImage,
+							mediumImage)
 		values (#{asin},
 				#{author},
 				#{binding},
@@ -38,7 +39,8 @@
 				#{title},
 				#{content},
 				#{detailPageURL},
-				#{largeImage})
+				#{largeImage},
+				#{mediumImage})
 	</insert>
 
 	<update id="updateKindle" parameterType="myclass.model.Kindle" statementType="PREPARED" timeout="20">
@@ -56,7 +58,8 @@
 			title = #{title},
 			content = #{content},
 			detailPageURL = #{detailPageURL},
-			largeImage = #{largeImage}
+			largeImage = #{largeImage},
+			mediumImage = #{mediumImage}
 		where asin = #{asin}
 	</update>
 

@@ -56,7 +56,8 @@ public class AmazonApiRequestItemLookup {
 
     public static String getResponseXml() throws Exception{
         String requestUrl = createRequestUrl();
-        KindleBO.requestLog(requestUrl);
+        //KindleBO.requestLog(requestUrl);
+        logger.debug("requestUrl : {}", requestUrl);
         return MyHttpGet.getResponseXml(requestUrl);
     }
 

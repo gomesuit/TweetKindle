@@ -20,6 +20,7 @@ public class Kindle {
     protected String content;
     protected String detailPageURL;
     protected String largeImage;
+    protected String mediumImage;
 
     public Kindle(){}
     public Kindle(Item item){
@@ -56,6 +57,11 @@ public class Kindle {
         	this.setLargeImage(item.getLargeImage().getURL());
         }else{
         	this.setLargeImage("");
+        }
+        if(item.getMediumImage() != null){
+        	this.setMediumImage(item.getMediumImage().getURL());
+        }else{
+        	this.setMediumImage("");
         }
     }
 
@@ -155,8 +161,14 @@ public class Kindle {
     public void setLargeImage(String largeImage) {
         this.largeImage = largeImage;
     }
-
-    public void showAllData(){
+    public String getMediumImage() {
+		return mediumImage;
+	}
+	public void setMediumImage(String mediumImage) {
+		this.mediumImage = mediumImage;
+	}
+	
+	public void showAllData(){
         System.out.println("{");
         System.out.println("    asin: " + asin);
         System.out.println("    author: " + author);
