@@ -24,6 +24,7 @@ public class KindleCollect implements Job {
 	}
     
     public static void main(String[] args) {
+    	logger.info("==============Start KindleCollect==============");
     	try {
 			collectBooks();
 	    	collectKindleStore();
