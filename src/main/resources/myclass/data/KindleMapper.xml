@@ -85,7 +85,7 @@
 	
 	<insert id="insertRequestLog" parameterType="java.util.Map" statementType="PREPARED" timeout="20">
 		insert into RequestLog (request,dateTime)
-		values (#{request},datetime('now', 'localtime'))
+		values (#{request}, NOW())
 		<selectKey keyProperty="id" resultType="java.lang.String" order="AFTER">
 			SELECT LAST_INSERT_ROWID()
 		</selectKey>
@@ -103,14 +103,14 @@
 
 	<insert id="insertKindleRegist" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
 		insert into KindleRegist (asin,insertTime,updateTime,tweetFlg,tweetFlg2)
-		values (#{asin},datetime('now', 'localtime'),datetime('now', 'localtime'),0,0)
+		values (#{asin}, NOW(), NOW(),0,0)
 	</insert>
 
 	<update id="updateKindleRegist" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
 		update
 			KindleRegist
 		set
-			updateTime = datetime('now', 'localtime')
+			updateTime = NOW()
 		where
 			asin = #{asin}
 	</update>
@@ -135,8 +135,8 @@
 			Kindle K, KindleRegist R
 		where
 			K.asin = R.asin and 
-			K.releaseDate > strftime('%Y-%m-%d', datetime('now', 'localtime')) and
-			strftime('%Y-%m-%d', R.insertTime) >= strftime('%Y-%m-%d', datetime('now', 'localtime')) and
+			K.releaseDate > DATE_FORMAT(NOW(),'%Y-%m-%d') and
+			DATE_FORMAT(R.insertTime, '%Y-%m-%d') >= DATE_FORMAT(NOW(),'%Y-%m-%d') and
 			R.tweetFlg = 0
 			<foreach item="word" collection="list">
 				and K.title not like #{word}
@@ -157,7 +157,7 @@
 			Kindle K, KindleRegist R
 		where
 			K.asin = R.asin and 
-			K.releaseDate = strftime('%Y-%m-%d', datetime('now', 'localtime')) and
+			K.releaseDate = DATE_FORMAT(NOW(),'%Y-%m-%d') and
 			R.tweetFlg2 = 0
 			<foreach item="word" collection="list">
 				and K.title not like #{word}
