@@ -244,4 +244,27 @@
 	<delete id="deleteNoImage" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
 		delete from NOIMAGE where asin = #{asin}
 	</delete>
+	
+	<select id="selectOldAsinList" parameterType="java.util.Map" resultType="java.lang.String">
+		select
+			K.asin
+		from
+			Kindle K, KindleRegist R
+		where
+			K.asin = R.asin and
+			R.deleteTime is null and
+			R.updateTime &lt; #{yesterday}
+		order by
+			R.updateTime asc
+		LIMIT #{limit}
+	</select>
+
+	<update id="deleteKindleRegist" parameterType="java.lang.String" statementType="PREPARED" timeout="20">
+		update
+			KindleRegist
+		set
+			deleteTime = NOW()
+		where
+			asin = #{asin}
+	</update>
 </mapper>

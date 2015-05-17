@@ -2,6 +2,8 @@ package myclass.bo;
 
 import myclass.model.Kindle;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -125,6 +127,25 @@ public class KindleBO {
         kindleMapper.deleteNoImage(asin);
     }
 
+    public static List<String> getOldAsinList(int limit){
+        Map<String,Object> map = new HashMap<String,Object>();
+        map.put("limit", limit);
+        map.put("yesterday", getYesterday());
+        return kindleMapper.selectOldAsinList(map);
+    }
+    
+    public static void deleteKindle(String asin){
+    	kindleMapper.deleteKindleRegist(asin);
+    }
+
+    private static Date getYesterday(){
+    	Calendar calendar = Calendar.getInstance();
+    	calendar.setTime(new Date());
+    	calendar.add(Calendar.DAY_OF_MONTH, -1);
+    	
+    	return calendar.getTime();
+    }
+    
     //private static String getDateTime(){
     //    Calendar calendar = Calendar.getInstance();
     //    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");

@@ -27,4 +27,6 @@ public interface KindleMapper {
   void insertNoImage(String asin);
   String selectNoImage();
   void deleteNoImage(String asin);
+  List<String> selectOldAsinList(Map<String,Object> map);
+  void deleteKindleRegist(String asin);
 }
