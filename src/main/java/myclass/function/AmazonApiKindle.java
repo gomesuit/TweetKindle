@@ -49,8 +49,13 @@ public class AmazonApiKindle {
     private static Kindle lookupKindle() throws Exception {
         String xml = AmazonApiRequestItemLookup.getResponseXml();
 		ItemLookupResponse ItemLookupResponse = JAXB.unmarshal(new StringReader(xml), ItemLookupResponse.class);
-        Item item = ItemLookupResponse.getItems().get(0).getItem().get(0);
-        return new Kindle(item);
+		List<Item> itemList = ItemLookupResponse.getItems().get(0).getItem();
+		if(itemList.size() == 0){
+			return null;
+		}else{
+	        Item item = itemList.get(0);
+	        return new Kindle(item);
+		}
     }
 
     public static List<Kindle> getKindleList() throws Exception{

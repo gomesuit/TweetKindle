@@ -31,6 +31,7 @@ public class KindleCollect implements Job {
 		} catch (Exception e) {
             logger.error("Exception of KindleCollect", e);
 		}
+    	logger.info("==============End KindleCollect==============");
     }
 
     public static void collectBooks() throws Exception{
