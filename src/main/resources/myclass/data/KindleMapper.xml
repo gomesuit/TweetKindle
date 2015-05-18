@@ -219,7 +219,7 @@
 	
 	<select id="selectExclusion" resultType="java.lang.String">
 		select
-			'%'||word||'%'
+			concat('%', word, '%')
 		from
 			EXCLUSION
 		where
