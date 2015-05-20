@@ -15,6 +15,9 @@ import javax.xml.bind.JAXB;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 @SuppressWarnings("restriction")
 public class AmazonApiKindle {
@@ -113,6 +116,31 @@ public class AmazonApiKindle {
             kindleList.add(new Kindle(item));
         }
         return kindleList;
+    }
+
+    public static List<String> getAsinListFromHtml(){
+    	String endPoint = "http://www.amazon.co.jp/s/ref=sr_pg_2?fst=as%3Aoff&rh=n%3A2250738051%2Cn%3A%212250739051%2Cn%3A2275256051%2Cn%3A2293143051%2Cp_n_date%3A2275273051&lo=digital-text&page=";
+    	List<String> asinFullList = new ArrayList<String>();
+    	
+    	for(int i = 1; ; i++){
+    		String url = endPoint + i;
+			List<String> asinList = new ArrayList<String>();
+    		try {
+				Document document = MyHttpGet.getAsinListFromHtml(url);
+				Elements elements = document.select(".s-result-item");
+		        for (Element element : elements) {
+		            asinList.add(element.attr("data-asin"));
+		        }
+		    	logger.debug("asinList {}", asinList);
+				if(asinList.size() == 0){
+					break;
+				}
+			} catch (Exception e) {
+				logger.error(e);
+			}
+    		asinFullList.addAll(asinList);
+    	}
+    	return asinFullList;
     }
     
 }

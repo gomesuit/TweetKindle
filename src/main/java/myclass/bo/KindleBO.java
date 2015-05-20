@@ -145,6 +145,14 @@ public class KindleBO {
     	
     	return calendar.getTime();
     }
+
+    public static boolean isExist(String asin){
+        if(kindleMapper.countKindle(asin) == 0){
+        	return false;
+        }else{
+        	return true;
+        }
+    }
     
     //private static String getDateTime(){
     //    Calendar calendar = Calendar.getInstance();
