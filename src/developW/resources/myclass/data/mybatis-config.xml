@@ -21,5 +21,6 @@
   <mappers>
     <mapper resource="myclass/data/KindleMapper.xml"/>
     <mapper resource="myclass/data/SchedulerMapper.xml"/>
+    <mapper resource="myclass/data/TagMapper.xml"/>
   </mappers>
 </configuration>
