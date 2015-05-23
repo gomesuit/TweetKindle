@@ -1,12 +1,14 @@
 package myclass.data;
 
 import myclass.model.Kindle;
+import myclass.model.KindleMyInfo;
 
 import java.util.List;
 import java.util.Map;
 
 public interface KindleMapper {
   int countKindle(String asin);
+  int countKindleRegist(String asin);
   void insertKindle(Kindle kindle);
   void updateKindle(Kindle kindle);
   List<String> selectSortValue(String searchIndex);
@@ -29,4 +31,8 @@ public interface KindleMapper {
   void deleteNoImage(String asin);
   List<String> selectOldAsinList(Map<String,Object> map);
   void deleteKindleRegist(String asin);
+  List<Kindle> selectAllKindleList();
+  void insertKindleMyInfo(KindleMyInfo kindleMyinfo);
+  void updateKindleMyInfo(KindleMyInfo kindleMyinfo);
+  int countKindleMyInfo(String asin);
 }

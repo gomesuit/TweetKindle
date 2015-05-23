@@ -267,4 +267,53 @@
 		where
 			asin = #{asin}
 	</update>
+
+	<select id="selectAllKindleList" resultType="myclass.model.Kindle">
+		select
+			*
+		from
+			Kindle
+	</select>
+	
+	<insert id="insertKindleMyInfo" parameterType="myclass.model.KindleMyInfo" statementType="PREPARED" timeout="20">
+		insert into KindleMyInfo (
+			asin,
+			tileTitle,
+			simpleTitle,
+			isBulkBuying,
+			isLimitedFree,
+			Label,
+			isNovel,
+			isMagazine)
+		values (
+			#{asin},
+			#{tileTitle},
+			#{simpleTitle},
+			#{isBulkBuying},
+			#{isLimitedFree},
+			#{Label},
+			#{isNovel},
+			#{isMagazine})
+	</insert>
+	
+	<select id="countKindleMyInfo" resultType="int">
+		select count(*) from KindleMyInfo where asin = #{asin}
+	</select>
+	
+	<update id="updateKindleMyInfo" parameterType="myclass.model.KindleMyInfo" statementType="PREPARED" timeout="20">
+		update KindleMyInfo set
+			tileTitle = #{tileTitle},
+			simpleTitle = #{simpleTitle},
+			isBulkBuying = #{isBulkBuying},
+			isLimitedFree = #{isLimitedFree},
+			Label = #{Label},
+			isNovel = #{isNovel},
+			isMagazine = #{isMagazine}
+		where asin = #{asin}
+	</update>
+	
+	<select id="countKindleRegist" resultType="int">
+		select count(*) from KindleRegist where asin = #{asin}
+	</select>
+	
 </mapper>

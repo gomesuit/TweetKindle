@@ -1,6 +1,7 @@
 package myclass.bo;
 
 import myclass.model.Kindle;
+import myclass.model.KindleMyInfo;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.HashMap;
 
 import myclass.config.MyConfig;
 import myclass.data.KindleMapper;
+import myclass.function.TitleConvert;
 
 import java.io.InputStream;
 
@@ -45,16 +47,19 @@ public class KindleBO {
     public static void registerKindle(Kindle kindle){
         if(kindleMapper.countKindle(kindle.getAsin()) == 0){
             kindleMapper.insertKindle(kindle);
-            kindleMapper.insertKindleRegist(kindle.getAsin());
         }else{
             kindleMapper.updateKindle(kindle);
-            kindleMapper.updateKindleRegist(kindle.getAsin());
         }
+        if(kindleMapper.countKindleRegist(kindle.getAsin()) == 0){
+        	kindleMapper.insertKindleRegist(kindle.getAsin());
+        }else{
+        	kindleMapper.updateKindleRegist(kindle.getAsin());
+        }
+        registerKindleMyinfo(TitleConvert.KindleToKindleMyInfo(kindle));
     }
 
     public static void registerKindleList(List<Kindle> kindleList){
         for (Kindle kindle : kindleList){
-        	//logger.info(kindle.getTitle());
             registerKindle(kindle);
         }
     }
@@ -153,11 +158,16 @@ public class KindleBO {
         	return true;
         }
     }
-    
-    //private static String getDateTime(){
-    //    Calendar calendar = Calendar.getInstance();
-    //    SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-    //    sdf.setTimeZone(TimeZone.getTimeZone("JST"));
-    //    return sdf.format(calendar.getTime());
-    //}
+
+    public static List<Kindle> getAllKindleList(){
+    	return kindleMapper.selectAllKindleList();
+    }
+
+    public static void registerKindleMyinfo(KindleMyInfo kindleMyinfo){
+        if(kindleMapper.countKindleMyInfo(kindleMyinfo.getAsin()) == 0){
+            kindleMapper.insertKindleMyInfo(kindleMyinfo);
+        }else{
+            kindleMapper.updateKindleMyInfo(kindleMyinfo);
+        }
+    }
 }
