@@ -9,6 +9,7 @@ public class KindleMyInfo {
     protected Boolean isLimitedFree;
     protected Boolean isNovel;
     protected Boolean isMagazine;
+    protected Boolean isAdult;
     
 	public String getAsin() {
 		return asin;
@@ -57,5 +58,11 @@ public class KindleMyInfo {
 	}
 	public void setIsMagazine(Boolean isMagazine) {
 		this.isMagazine = isMagazine;
+	}
+	public Boolean getIsAdult() {
+		return isAdult;
+	}
+	public void setIsAdult(Boolean isAdult) {
+		this.isAdult = isAdult;
 	}
 }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="myclass.data.TagMapper">
+	
+	<insert id="insertTag" parameterType="myclass.model.Tag" statementType="PREPARED" timeout="20">
+		insert into tag (name) values (#{name})
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			SELECT @@IDENTITY
+		</selectKey>
+	</insert>
+	
+	<insert id="insertTagMap" parameterType="myclass.model.TagMap" statementType="PREPARED" timeout="20">
+		insert into tagmap (asin, tag_id) values (#{asin}, #{tagId})
+	</insert>
+	
+	<select id="selectTagByName" parameterType="java.lang.String" resultType="myclass.model.Tag">
+		select
+			*
+		from
+			tag
+		where
+			name = #{name}
+	</select>
+	
+	<select id="selectTagMap" parameterType="myclass.model.TagMap" resultType="myclass.model.TagMap">
+		select
+			*
+		from
+			tagmap
+		where
+			asin = #{asin} and
+			tag_id = #{tagId}
+	</select>
+	
+</mapper>

@@ -2,6 +2,8 @@ package myclass.bo;
 
 import myclass.model.Kindle;
 import myclass.model.KindleMyInfo;
+import myclass.model.Tag;
+import myclass.model.TagMap;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,6 +13,7 @@ import java.util.HashMap;
 
 import myclass.config.MyConfig;
 import myclass.data.KindleMapper;
+import myclass.data.TagMapper;
 import myclass.function.TitleConvert;
 
 import java.io.InputStream;
@@ -29,6 +32,7 @@ public class KindleBO {
     private static SqlSessionFactory sqlSessionFactory;
     private static SqlSession session;
     private static KindleMapper kindleMapper;
+    private static TagMapper tagMapper;
 
     @SuppressWarnings("unused")
 	private static KindleBO instance = new KindleBO();
@@ -39,6 +43,7 @@ public class KindleBO {
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             session = sqlSessionFactory.openSession(true);
             kindleMapper = session.getMapper(KindleMapper.class);
+            tagMapper = session.getMapper(TagMapper.class);
         }catch(java.io.IOException e){
         	logger.error("create instance error {}", e);
         }
@@ -47,6 +52,7 @@ public class KindleBO {
     public static void registerKindle(Kindle kindle){
         if(kindleMapper.countKindle(kindle.getAsin()) == 0){
             kindleMapper.insertKindle(kindle);
+            registerTag(kindle.getAsin(), kindle.getAuthor());
         }else{
             kindleMapper.updateKindle(kindle);
         }
@@ -166,8 +172,41 @@ public class KindleBO {
     public static void registerKindleMyinfo(KindleMyInfo kindleMyinfo){
         if(kindleMapper.countKindleMyInfo(kindleMyinfo.getAsin()) == 0){
             kindleMapper.insertKindleMyInfo(kindleMyinfo);
+            registerTag(kindleMyinfo.getAsin(), kindleMyinfo.getSimpleTitle());
+            registerTag(kindleMyinfo.getAsin(), kindleMyinfo.getLabel());
         }else{
             kindleMapper.updateKindleMyInfo(kindleMyinfo);
         }
+    }
+    
+    private static void registerTag(String asin, String name){
+    	if(name == null){
+    		return;
+    	}
+    	if(name.length() > 50){
+    		return;
+    	}
+    	
+    	Tag tag = tagMapper.selectTagByName(name);
+    	if(tag == null){
+    		tag = new Tag();
+    		tag.setName(name);
+    		tagMapper.insertTag(tag);
+    		TagMap tagMap = new TagMap();
+        	tagMap.setAsin(asin);
+        	tagMap.setTagId(tag.getId());
+        	tagMapper.insertTagMap(tagMap);
+    	}else{
+    		TagMap tagMap = new TagMap();
+        	tagMap.setAsin(asin);
+        	tagMap.setTagId(tag.getId());
+        	tagMap = tagMapper.selectTagMap(tagMap);
+        	if(tagMap == null){
+        		tagMap = new TagMap();
+            	tagMap.setAsin(asin);
+            	tagMap.setTagId(tag.getId());
+            	tagMapper.insertTagMap(tagMap);
+        	}
+    	}    	
     }
 }

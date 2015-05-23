@@ -30,6 +30,7 @@ public class TitleConvert {
     	kindleMyinfo.setSimpleTitle(getSimpleTitle(title));
     	kindleMyinfo.setTileTitle(getTileTitle(title));
     	kindleMyinfo.setIsMagazine(isMagazine(title));
+    	kindleMyinfo.setIsAdult(isAdult(title));
     	
     	return kindleMyinfo;
 	}
@@ -53,6 +54,34 @@ public class TitleConvert {
     	regex += "|No\\.[0-9]+（[0-9]+年）";
     	regex += "|[0-9]+月新刊";
     	regex += "|[0-9]+月号";
+    	Pattern p = Pattern.compile(regex);
+    	Matcher m = p.matcher(title);
+    	
+    	if (m.find()){
+  				return true;
+    		}else{
+    			return false;
+    	}
+    }
+
+    private static boolean isAdult(String title){
+    	String regex = "";
+    	regex += "BL☆美少年ブック";
+    	regex += "|BLスイートノベル";
+    	regex += "|BOYS FAN";
+    	regex += "|Ficus";
+    	regex += "|TL濡恋コミックス";
+    	regex += "|♂BL♂らぶらぶコミックス";
+    	regex += "|もえまん";
+    	regex += "|りぼんマスコットコミックスDIGITAL";
+    	regex += "|エロマンガ島";
+    	regex += "|ディアプラス・コミックス";
+    	regex += "|ドＭ";
+    	regex += "|ビーボーイコミックス";
+    	regex += "|ラブきゅんコミック";
+    	regex += "|リア×ロマ";
+    	regex += "|ＡＶ男優";
+    	regex += "|ｽｷして?桃色日記";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
     	

@@ -284,7 +284,8 @@
 			isLimitedFree,
 			Label,
 			isNovel,
-			isMagazine)
+			isMagazine,
+			isAdult)
 		values (
 			#{asin},
 			#{tileTitle},
@@ -293,7 +294,8 @@
 			#{isLimitedFree},
 			#{Label},
 			#{isNovel},
-			#{isMagazine})
+			#{isMagazine},
+			#{isAdult})
 	</insert>
 	
 	<select id="countKindleMyInfo" resultType="int">
@@ -308,7 +310,8 @@
 			isLimitedFree = #{isLimitedFree},
 			Label = #{Label},
 			isNovel = #{isNovel},
-			isMagazine = #{isMagazine}
+			isMagazine = #{isMagazine},
+			isAdult = #{isAdult}
 		where asin = #{asin}
 	</update>
 	
