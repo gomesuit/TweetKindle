@@ -54,6 +54,7 @@ public class TitleConvert {
     	regex += "|No\\.[0-9]+（[0-9]+年）";
     	regex += "|[0-9]+月新刊";
     	regex += "|[0-9]+月号";
+    	regex += "|Amusement Life Magazine";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
     	
@@ -77,11 +78,49 @@ public class TitleConvert {
     	regex += "|エロマンガ島";
     	regex += "|ディアプラス・コミックス";
     	regex += "|ドＭ";
+    	regex += "|ドS";
     	regex += "|ビーボーイコミックス";
     	regex += "|ラブきゅんコミック";
     	regex += "|リア×ロマ";
     	regex += "|ＡＶ男優";
-    	regex += "|ｽｷして?桃色日記";
+    	regex += "|ｽｷして\\?桃色日記";
+    	regex += "|e\\-Color Comic";
+    	regex += "|フラワーコミックス";
+    	regex += "|えっち";
+    	regex += "|女体化";
+    	regex += "|潮吹き";
+    	regex += "|挿入";
+    	regex += "|ハーレクインコミックス";
+    	regex += "|S●X";
+    	regex += "|乙女チック";
+    	regex += "|moment";
+    	regex += "|アソコ";
+    	regex += "|肌恋";
+    	regex += "|コミックHIMEクリピンク";
+    	regex += "|レイプ";
+    	regex += "|ぶんか社コミックス S\\*girl Selection";
+    	regex += "|男の娘";
+    	regex += "|男子寮";
+    	regex += "|シトロンコミックス";
+    	regex += "|Ｈしちゃ";
+    	regex += "|女の体";
+    	regex += "|イキすぎ";
+    	regex += "|エッチ";
+    	regex += "|淫ら";
+    	regex += "|侍侍";
+    	regex += "|スケベ";
+    	regex += "|ヤりすぎ";
+    	regex += "|ヤリすぎ";
+    	regex += "|QooPA";
+    	regex += "|乙女ドルチェ・コミックス";
+    	regex += "|喘ぐ";
+    	regex += "|素股";
+    	regex += "|GUSH mania COMICS";
+    	regex += "|MIU 恋愛MAX COMICS";
+    	regex += "|秋水社\\/MAHK";
+    	regex += "|オトナの恋";
+    	regex += "|オトナの恋";
+    	regex += "|蜜恋";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
     	
@@ -257,6 +296,7 @@ public class TitleConvert {
     	result = result.replaceAll("新装版", "");
     	result = result.replaceAll("完全版", "");
     	result = result.replaceAll("無料ダイジェスト版", "");
+    	result = result.replaceAll("オールカラー版", "");
     	result = result.replaceAll("カラー版", "");
     	result = result.replaceAll("モノクロ版", "");
     	result = result.replaceAll("無料お試し版", "");
@@ -284,7 +324,7 @@ public class TitleConvert {
     	result = result.replaceAll(" [上中下]$", "");
     	result = result.replaceAll("\\[[上中下]\\]$", "");
     	result = result.replaceAll("[（\\(][前中後]編[）\\)]$", "");
-    	result = result.replaceAll(" vol\\.[１２３４５６７８９０0-9]+$", "");
+    	result = result.replaceAll(" \\[vV\\]\\[oO\\]\\[lL\\]\\.[１２３４５６７８９０0-9]+$", "");
     	
     	result = result.trim();
     	result = result.replaceAll("[:：]$", "");
