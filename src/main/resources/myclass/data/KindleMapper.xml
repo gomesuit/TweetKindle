@@ -132,7 +132,7 @@
 			K.detailPageURL,
 			K.largeImage
 		from
-			Kindle K INNER JOIN KindleRegist R ON K.asin = R.asin LEFT JOIN KindleMyInfo I ON K.asin = I.asin
+			Kindle K INNER JOIN KindleRegist R ON K.asin = R.asin INNER JOIN KindleMyInfo I ON K.asin = I.asin
 		where
 			K.releaseDate > DATE_FORMAT(NOW(),'%Y-%m-%d')
 			and DATE_FORMAT(R.insertTime, '%Y-%m-%d') >= DATE_FORMAT(NOW(),'%Y-%m-%d')
@@ -154,7 +154,7 @@
 			K.detailPageURL,
 			K.largeImage
 		from
-			Kindle K INNER JOIN KindleRegist R ON K.asin = R.asin LEFT JOIN KindleMyInfo I ON K.asin = I.asin
+			Kindle K INNER JOIN KindleRegist R ON K.asin = R.asin INNER JOIN KindleMyInfo I ON K.asin = I.asin
 		where
 			K.releaseDate = DATE_FORMAT(NOW(),'%Y-%m-%d')
 			and R.tweetFlg2 = 0
