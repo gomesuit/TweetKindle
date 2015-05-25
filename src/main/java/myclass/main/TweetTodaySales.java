@@ -1,15 +1,12 @@
 package myclass.main;
 
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.StatusUpdate;
 
-import java.io.File;
 import java.util.Map;
 
 import myclass.bo.KindleBO;
-import myclass.function.DownloadImage;
 import myclass.function.GoogleURLShortener;
 import myclass.function.MyMail;
 
@@ -22,20 +19,16 @@ import org.quartz.JobExecutionException;
 public class TweetTodaySales implements Job 
 {
     private static Logger logger = LogManager.getLogger(TweetTodaySales.class);
+    private KindleBO kindleBO = new KindleBO();
     
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String[] args = {};
-		TweetTodaySales.main(args);
+		exec();
 	}
     
-    public static void main( String[] args ){
+    public void exec(){
 
     	Map<String,String> map;
-    	if(args.length != 0){
-    		map = KindleBO.getKindle(args[0]);
-    	}else{
-    		map = KindleBO.getKindleTodaySale();
-    	}
+    	map = kindleBO.getKindleTodaySale();
 
         if(map == null){
             logger.info("検索結果は一件もありませんでした。");
@@ -57,7 +50,7 @@ public class TweetTodaySales implements Job
 	            }*/
             	//KindleBO.registerNoImage(map.get("asin"));
 	            
-				Status status = twitter.updateStatus(update);
+				twitter.updateStatus(update);
 	            logger.info("本日発売ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
 	        }catch(Exception e){
 	            String message = "";
@@ -71,12 +64,12 @@ public class TweetTodaySales implements Job
 				}
 	            logger.error("Exception of TweetTodaySales", e);
 	        }finally{
-	            KindleBO.updateTweetTodaySales(map.get("asin"));
+	        	kindleBO.updateTweetTodaySales(map.get("asin"));
 	        }
         }
     }
 
-    private static String cutStr(String str, int num){
+    private String cutStr(String str, int num){
     	if(str.length() <= num){
     		return str;
     	}else{

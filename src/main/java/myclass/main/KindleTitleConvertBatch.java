@@ -15,6 +15,7 @@ import org.quartz.JobExecutionException;
 
 public class KindleTitleConvertBatch implements Job {
     private static Logger logger = LogManager.getLogger(KindleTitleConvertBatch.class);
+    private KindleBO kindleBO = new KindleBO();
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
     	logger.info("==============Start KindleTitleConvertBatch==============");
@@ -27,11 +28,11 @@ public class KindleTitleConvertBatch implements Job {
 	}
 
 	public void exec() throws Exception{
-    	List<Kindle> kindleList = KindleBO.getAllKindleList();
+    	List<Kindle> kindleList = new KindleBO().getAllKindleList();
     	
     	for(Kindle kindle : kindleList){
     		KindleMyInfo kindleMyinfo = new TitleConvert().KindleToKindleMyInfo(kindle);
-        	KindleBO.registerKindleMyinfo(kindleMyinfo);
+    		kindleBO.registerKindleMyinfo(kindleMyinfo);
     	}
     }
     

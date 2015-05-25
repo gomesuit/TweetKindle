@@ -1,15 +1,12 @@
 package myclass.main;
 
-import twitter4j.Status;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.StatusUpdate;
 
-import java.io.File;
 import java.util.Map;
 
 import myclass.bo.KindleBO;
-import myclass.function.DownloadImage;
 import myclass.function.GoogleURLShortener;
 import myclass.function.MyMail;
 
@@ -22,20 +19,16 @@ import org.quartz.JobExecutionException;
 public class TweetNewSales implements Job 
 {
     private static Logger logger = LogManager.getLogger(TweetNewSales.class);
+    private KindleBO kindleBO = new KindleBO();
     
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String[] args = {};
-		TweetNewSales.main(args);
+		exec();
 	}
     
-    public static void main( String[] args ){
+    public void exec(){
     	
     	Map<String,String> map;
-    	if(args.length != 0){
-    		map = KindleBO.getKindle(args[0]);
-    	}else{
-    		map = KindleBO.getKindleShinchaku();
-    	}
+		map = kindleBO.getKindleShinchaku();
 
         if(map == null){
             logger.info("新着が一件もありませんでした。");
@@ -55,9 +48,9 @@ public class TweetNewSales implements Job
 	            }else{
 	            	KindleBO.registerNoImage(map.get("asin"));
 	            }*/
-            	KindleBO.registerNoImage(map.get("asin"));
+	    	    kindleBO.registerNoImage(map.get("asin"));
 	            
-				Status status = twitter.updateStatus(update);
+				twitter.updateStatus(update);
 	            logger.info("新着ツイートが正常終了しました。{}", map.get("asin"), tweetContent);
 	        }catch(Exception e){
 	            String message = "";
@@ -71,12 +64,12 @@ public class TweetNewSales implements Job
 				}
 	            logger.error("Exception of TweetNewSales", e);
 	        }finally{
-	            KindleBO.updateTweetShinchaku(map.get("asin"));
+	        	kindleBO.updateTweetShinchaku(map.get("asin"));
 	        }
         }
     }
 
-    private static String cutStr(String str, int num){
+    private String cutStr(String str, int num){
     	if(str.length() <= num){
     		return str;
     	}else{

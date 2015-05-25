@@ -15,13 +15,9 @@ import org.quartz.JobExecutionException;
 public class KindleUpdate implements Job {
     private static Logger logger = LogManager.getLogger(KindleUpdate.class);
     private static final int UPDATE_NUM = 500;
+    private KindleBO kindleBO = new KindleBO();
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String[] args = null;
-		KindleUpdate.main(args);
-	}
-    
-    public static void main(String[] args) {
     	logger.info("==============Start KindleUpdate==============");
     	try {
     		exec();
@@ -29,17 +25,17 @@ public class KindleUpdate implements Job {
             logger.error("Exception of KindleUpdate", e);
 		}
     	logger.info("==============End KindleUpdate==============");
-    }
+	}
 
-    public static void exec(){
-    	List<String> asinList = KindleBO.getOldAsinList(UPDATE_NUM);
+    public void exec(){
+    	List<String> asinList = kindleBO.getOldAsinList(UPDATE_NUM);
     	logger.debug("asinList : {}", asinList);
     	for(String asin : asinList){
     		updateInfo(asin);
     	}
     }
 
-	private static void updateInfo(String asin){
+	private void updateInfo(String asin){
 		Kindle kindle;
 		try {
 			kindle = AmazonApiKindle.getKindle(asin);
@@ -48,9 +44,9 @@ public class KindleUpdate implements Job {
 			return;
 		}
 		if(kindle != null){
-			KindleBO.registerKindle(kindle);
+			kindleBO.registerKindle(kindle);
 		}else{
-			KindleBO.deleteKindle(asin);
+			kindleBO.deleteKindle(asin);
 			logger.info("delete : {}", asin);
 		}
 	}

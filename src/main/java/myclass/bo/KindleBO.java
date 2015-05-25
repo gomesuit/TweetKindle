@@ -34,10 +34,7 @@ public class KindleBO {
     private static KindleMapper kindleMapper;
     private static TagMapper tagMapper;
 
-    @SuppressWarnings("unused")
-	private static KindleBO instance = new KindleBO();
-
-    private KindleBO(){
+    public KindleBO(){
         try{
             inputStream = Resources.getResourceAsStream(MYBATIS_CONFIG);
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
@@ -49,7 +46,7 @@ public class KindleBO {
         }
     }
 
-    public static void registerKindle(Kindle kindle){
+    public void registerKindle(Kindle kindle){
         if(kindleMapper.countKindle(kindle.getAsin()) == 0){
             kindleMapper.insertKindle(kindle);
             registerTag(kindle.getAsin(), kindle.getAuthor());
@@ -64,49 +61,49 @@ public class KindleBO {
         registerKindleMyinfo(new TitleConvert().KindleToKindleMyInfo(kindle));
     }
 
-    public static void registerKindleList(List<Kindle> kindleList){
+    public void registerKindleList(List<Kindle> kindleList){
         for (Kindle kindle : kindleList){
             registerKindle(kindle);
         }
     }
 
-    public static List<String> getSortValue(String searchIndex){
+    public List<String> getSortValue(String searchIndex){
         return kindleMapper.selectSortValue(searchIndex);
     }
 
-    public static List<String> getBrowseNodes(String searchIndex){
+    public List<String> getBrowseNodes(String searchIndex){
         return kindleMapper.selectBrowseNodes(searchIndex);
     }
     
-    public static List<String> getPowerPubdates(String searchIndex){
+    public List<String> getPowerPubdates(String searchIndex){
         return kindleMapper.selectPowerPubdates(searchIndex);
     }
 
-    public static List<Kindle> getTodayKindleList(String date){
+    public List<Kindle> getTodayKindleList(String date){
         return kindleMapper.selectTodayKindleList(date);
     }
 
-    public static Map<String,String> getKindleShinchaku(){
+    public Map<String,String> getKindleShinchaku(){
         return kindleMapper.selectKindleShinchaku(getExclusion());
     }
 
-    public static Map<String,String> getKindle(String asin){
+    public Map<String,String> getKindle(String asin){
         return kindleMapper.selectKindle(asin);
     }
 
-    public static void updateTweetShinchaku(String asin){
+    public void updateTweetShinchaku(String asin){
         kindleMapper.updateTweetShinchaku(asin);
     }
 
-    public static Map<String,String> getKindleTodaySale(){
+    public Map<String,String> getKindleTodaySale(){
         return kindleMapper.selectKindleTodaySales(getExclusion());
     }
 
-    public static void updateTweetTodaySales(String asin){
+    public void updateTweetTodaySales(String asin){
         kindleMapper.updateTweetTodaySales(asin);
     }
 
-    public static int requestLog(String request){
+    public int requestLog(String request){
         Map<String,String> map = new HashMap<String,String>();
 
         map.put("request", request);
@@ -114,42 +111,42 @@ public class KindleBO {
         return Integer.parseInt(map.get("id"));
     }
 
-    public static Map<String,String> getMinTweetTop3(){
+    public Map<String,String> getMinTweetTop3(){
         return kindleMapper.selectMinTweetTop3();
     }
 
-    public static void countupTweetTop3(String description){
+    public void countupTweetTop3(String description){
         kindleMapper.countupTweetTop3(description);
     }
 
-    public static List<String> getExclusion(){
+    public List<String> getExclusion(){
         return kindleMapper.selectExclusion();
     }
 
-    public static void registerNoImage(String asin){
+    public void registerNoImage(String asin){
         kindleMapper.insertNoImage(asin);
     }
 
-    public static String getNoImage(){
+    public String getNoImage(){
         return kindleMapper.selectNoImage();
     }
 
-    public static void deleteNoImage(String asin){
+    public void deleteNoImage(String asin){
         kindleMapper.deleteNoImage(asin);
     }
 
-    public static List<String> getOldAsinList(int limit){
+    public List<String> getOldAsinList(int limit){
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("limit", limit);
         map.put("yesterday", getYesterday());
         return kindleMapper.selectOldAsinList(map);
     }
     
-    public static void deleteKindle(String asin){
+    public void deleteKindle(String asin){
     	kindleMapper.deleteKindleRegist(asin);
     }
 
-    private static Date getYesterday(){
+    private Date getYesterday(){
     	Calendar calendar = Calendar.getInstance();
     	calendar.setTime(new Date());
     	calendar.add(Calendar.DAY_OF_MONTH, -1);
@@ -157,7 +154,7 @@ public class KindleBO {
     	return calendar.getTime();
     }
 
-    public static boolean isExist(String asin){
+    public boolean isExist(String asin){
         if(kindleMapper.countKindle(asin) == 0){
         	return false;
         }else{
@@ -165,11 +162,11 @@ public class KindleBO {
         }
     }
 
-    public static List<Kindle> getAllKindleList(){
+    public List<Kindle> getAllKindleList(){
     	return kindleMapper.selectAllKindleList();
     }
 
-    public static void registerKindleMyinfo(KindleMyInfo kindleMyinfo){
+    public void registerKindleMyinfo(KindleMyInfo kindleMyinfo){
         if(kindleMapper.countKindleMyInfo(kindleMyinfo.getAsin()) == 0){
             kindleMapper.insertKindleMyInfo(kindleMyinfo);
             registerTag(kindleMyinfo.getAsin(), kindleMyinfo.getSimpleTitle());
@@ -179,7 +176,7 @@ public class KindleBO {
         }
     }
     
-    private static void registerTag(String asin, String name){
+    private void registerTag(String asin, String name){
     	if(name == null){
     		return;
     	}

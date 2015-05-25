@@ -14,16 +14,16 @@ import org.quartz.JobExecutionException;
 public class KindleCollect implements Job {
     private static Logger logger = LogManager.getLogger(KindleCollect.class);
     
-    private static List<String> sortValueList;
-    private static List<String> browseNodesList;
-    private static List<String> powerPubdatesList;
+    private List<String> sortValueList;
+    private List<String> browseNodesList;
+    private List<String> powerPubdatesList;
+    private KindleBO kindleBO = new KindleBO();
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String[] args = null;
-		KindleCollect.main(args);
+		exec();
 	}
     
-    public static void main(String[] args) {
+    public void exec() {
     	logger.info("==============Start KindleCollect==============");
     	try {
 			collectBooks();
@@ -34,31 +34,32 @@ public class KindleCollect implements Job {
     	logger.info("==============End KindleCollect==============");
     }
 
-    public static void collectBooks() throws Exception{
+    public void collectBooks() throws Exception{
+    	KindleBO kindleBO = new KindleBO();
         String searchIndex = "Books";
         String powerBinding = "Kindle版";
 
-        sortValueList = KindleBO.getSortValue(searchIndex);
-        browseNodesList = KindleBO.getBrowseNodes(searchIndex);
-        powerPubdatesList = KindleBO.getPowerPubdates(searchIndex);
+        sortValueList = kindleBO.getSortValue(searchIndex);
+        browseNodesList = kindleBO.getBrowseNodes(searchIndex);
+        powerPubdatesList = kindleBO.getPowerPubdates(searchIndex);
         for(String sortValue : sortValueList){
             for(String browseNodes : browseNodesList){
                 for(String powerPubdate : powerPubdatesList){
-                    KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, sortValue, browseNodes, powerPubdate));
+                	kindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, powerBinding, sortValue, browseNodes, powerPubdate));
                 }
             }
         }
     }
     
-    public static void collectKindleStore() throws Exception{
+    public void collectKindleStore() throws Exception{
         String searchIndex = "KindleStore";
         
-        sortValueList = KindleBO.getSortValue(searchIndex);
-        browseNodesList = KindleBO.getBrowseNodes(searchIndex);
+        sortValueList = kindleBO.getSortValue(searchIndex);
+        browseNodesList = kindleBO.getBrowseNodes(searchIndex);
 
         for(String sortValue : sortValueList){
             for(String browseNodes : browseNodesList){
-                KindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, "", sortValue, browseNodes, ""));
+            	kindleBO.registerKindleList(AmazonApiKindle.getKindleList(searchIndex, "", sortValue, browseNodes, ""));
             }
         }
     }

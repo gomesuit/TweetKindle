@@ -25,7 +25,6 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -34,19 +33,19 @@ import twitter4j.UploadedMedia;
 
 public class TweetTop3 implements Job {
     private static Logger logger = LogManager.getLogger(TweetTop3.class);
+    private KindleBO kindleBO = new KindleBO();
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String[] args = {};
-		TweetTop3.main(args);
+		exec();
 	}
     
-    public static void main(String[] args) {
+    public void exec() {
     	logger.info("【Kindleベストセラー】ツイート処理開始");
     	String headerTitle = "【Kindleベストセラー】";
     	String description = "";
 		if(isTweet()){
 	    	try{
-				Map<String,String> map = KindleBO.getMinTweetTop3();
+				Map<String,String> map = kindleBO.getMinTweetTop3();
 				description = map.get("description");
 				headerTitle = "【Kindle" + description + "ベストセラー】";
 				
@@ -76,8 +75,8 @@ public class TweetTop3 implements Job {
 				
 				StatusUpdate update = new StatusUpdate(tweetContent);
 				update.setMediaIds(mediaIds);
-				Status status = twitter.updateStatus(update);
-				KindleBO.countupTweetTop3(description);
+				twitter.updateStatus(update);
+				kindleBO.countupTweetTop3(description);
 				logger.info(headerTitle + "ツイート正常終了 \n{}", tweetContent);
 	    	}catch(Exception e){
 	            String message = "";
@@ -95,7 +94,7 @@ public class TweetTop3 implements Job {
 		
     }
     
-    private static String cutStr(String str, int num){
+    private String cutStr(String str, int num){
     	if(str.length() <= num){
     		return str;
     	}else{
@@ -103,7 +102,7 @@ public class TweetTop3 implements Job {
     	}
     }
     
-    private static boolean isTweet(){
+    private boolean isTweet(){
     	long LastTweetDate;
     	try{
         	LastTweetDate = MyTwitterApi.getLastTweetDate().getTime();

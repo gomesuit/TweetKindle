@@ -15,13 +15,9 @@ import org.quartz.JobExecutionException;
 
 public class KindleCollectFromHtml implements Job {
     private static Logger logger = LogManager.getLogger(KindleCollectFromHtml.class);
+    private KindleBO kindleBO = new KindleBO();
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String[] args = null;
-		KindleCollectFromHtml.main(args);
-	}
-    
-    public static void main(String[] args) {
     	logger.info("==============Start KindleCollectFromHtml==============");
     	try {
 			exec();
@@ -29,21 +25,21 @@ public class KindleCollectFromHtml implements Job {
             logger.error("Exception of KindleCollectFromHtml", e);
 		}
     	logger.info("==============End KindleCollectFromHtml==============");
-    }
+	}
 
-    public static void exec() throws Exception{
+    public void exec() throws Exception{
     	List<String> asinList = AmazonApiKindle.getAsinListFromHtml();
     	logger.debug("asinList {}", asinList);
     	List<Kindle> newKindleList = getNewKindleListFromAsinList(asinList);
     	logger.debug("newKindleList {}", newKindleList);
-    	KindleBO.registerKindleList(newKindleList);
+    	kindleBO.registerKindleList(newKindleList);
     	logger.info("{}件の登録が完了しました。", newKindleList.size());
     }
     
-    private static List<Kindle> getNewKindleListFromAsinList(List<String> asinList) {
+    private List<Kindle> getNewKindleListFromAsinList(List<String> asinList) {
     	List<Kindle> kindleList = new ArrayList<Kindle>();
     	for(String asin : asinList){
-    		if(!KindleBO.isExist(asin)){
+    		if(!kindleBO.isExist(asin)){
     			try {
 					kindleList.add(AmazonApiKindle.getKindle(asin));
 				} catch (Exception e) {
