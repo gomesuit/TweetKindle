@@ -17,11 +17,6 @@ public class KindleTitleConvertBatch implements Job {
     private static Logger logger = LogManager.getLogger(KindleTitleConvertBatch.class);
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
-		String[] args = null;
-		KindleTitleConvertBatch.main(args);
-	}
-    
-    public static void main(String[] args) {
     	logger.info("==============Start KindleTitleConvertBatch==============");
     	try {
     		exec();
@@ -29,9 +24,9 @@ public class KindleTitleConvertBatch implements Job {
             logger.error("Exception of KindleTitleConvertBatch", e);
 		}
     	logger.info("==============End KindleTitleConvertBatch==============");
-    }
+	}
 
-    private static void exec() throws Exception{
+	public void exec() throws Exception{
     	List<Kindle> kindleList = KindleBO.getAllKindleList();
     	
     	for(Kindle kindle : kindleList){
