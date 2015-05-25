@@ -61,7 +61,7 @@ public class KindleBO {
         }else{
         	kindleMapper.updateKindleRegist(kindle.getAsin());
         }
-        registerKindleMyinfo(TitleConvert.KindleToKindleMyInfo(kindle));
+        registerKindleMyinfo(new TitleConvert().KindleToKindleMyInfo(kindle));
     }
 
     public static void registerKindleList(List<Kindle> kindleList){

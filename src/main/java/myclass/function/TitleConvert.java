@@ -14,11 +14,8 @@ import org.apache.logging.log4j.Logger;
 public class TitleConvert {
     @SuppressWarnings("unused")
 	private static Logger logger = LogManager.getLogger(TitleConvert.class);
-
-    @SuppressWarnings("unused")
-	private static TitleConvert instance = new TitleConvert();
     
-	public static KindleMyInfo KindleToKindleMyInfo(Kindle kindle) {
+	public KindleMyInfo KindleToKindleMyInfo(Kindle kindle) {
 		KindleMyInfo kindleMyinfo = new KindleMyInfo();
 		String title = kindle.getTitle();
     	
@@ -35,7 +32,7 @@ public class TitleConvert {
     	return kindleMyinfo;
 	}
 
-	private static boolean isBulkBuying(String title){
+	private boolean isBulkBuying(String title){
     	String regex = "^\\[まとめ買い\\]";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
@@ -47,7 +44,7 @@ public class TitleConvert {
     	}
     }
 
-    private static boolean isMagazine(String title){
+    private boolean isMagazine(String title){
     	String regex = "\\[雑誌\\]";
     	regex += "|[０１２３４５６７８９0-9]+年[０１２３４５６７８９0-9]+月号";
     	regex += "|月刊";
@@ -65,7 +62,7 @@ public class TitleConvert {
     	}
     }
 
-    private static boolean isAdult(String title){
+    private boolean isAdult(String title){
     	String regex = "";
     	regex += "BL☆美少年ブック";
     	regex += "|BLスイートノベル";
@@ -119,8 +116,14 @@ public class TitleConvert {
     	regex += "|MIU 恋愛MAX COMICS";
     	regex += "|秋水社\\/MAHK";
     	regex += "|オトナの恋";
-    	regex += "|オトナの恋";
     	regex += "|蜜恋";
+    	regex += "|ビーボーイデジタルコミックス";
+    	regex += "|花音コミックス";
+    	regex += "|絶対恋愛Sweet";
+    	regex += "|濡れ";
+    	regex += "|バンブーコミックス 恋愛天国☆恋パラコレクション";
+
+    	regex += "|マンガ日本の歴史";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
     	
@@ -131,7 +134,7 @@ public class TitleConvert {
     	}
     }
 
-    private static boolean isNovel(String title){    	
+    private boolean isNovel(String title){    	
     	String regex = ".*文庫.*";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
@@ -143,7 +146,7 @@ public class TitleConvert {
     	}
     }
 
-    private static boolean isLimitedFree(String title){
+    private boolean isLimitedFree(String title){
     	String regex = "期間限定.*無料";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
@@ -155,7 +158,7 @@ public class TitleConvert {
     	}
     }
 
-    private static String getLabel(String title){
+    private String getLabel(String title){
     	if(isBulkBuying(title)){
     		return null;
     	}
@@ -188,7 +191,7 @@ public class TitleConvert {
 		}
     }
 
-    private static String getExceptLabelFromTitle(String title){
+    private String getExceptLabelFromTitle(String title){
     	if(isBulkBuying(title)){
     		return title;
     	}
@@ -204,7 +207,7 @@ public class TitleConvert {
 		return result;
     }
 
-    private static String deleteParentheses(String string){
+    private String deleteParentheses(String string){
 
     	String result = string;
     	result = result.replaceAll("【】", "");
@@ -221,7 +224,7 @@ public class TitleConvert {
 		return result;
     }
 
-    private static String deleteModifier(String string){
+    private String deleteModifier(String string){
 
     	String result = string;
     	result = result.replaceAll("　", " ");
@@ -306,7 +309,7 @@ public class TitleConvert {
 		return result;
     }
 
-    private static String getSimpleTitle(String title){
+    private String getSimpleTitle(String title){
     	String result = getExceptLabelFromTitle(title);
     	result = getExceptPreparedTitle(result);
 
@@ -337,14 +340,14 @@ public class TitleConvert {
 		return result;
     }
     
-    private static String getTileTitle(String title){
+    private String getTileTitle(String title){
     	String TileTitle = getExceptLabelFromTitle(title);
     	TileTitle = getExceptPreparedTitle(TileTitle);
     	
     	return TileTitle;
     }
     
-    private static String getPreparedTitle(String title){
+    private String getPreparedTitle(String title){
     	String regex = "<(.+?)>";
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
@@ -361,7 +364,7 @@ public class TitleConvert {
 		}
     }
     
-    private static String getExceptPreparedTitle(String title){    	
+    private String getExceptPreparedTitle(String title){    	
     	String preparedTitle = getPreparedTitle(title);
     	
     	if(preparedTitle != null){

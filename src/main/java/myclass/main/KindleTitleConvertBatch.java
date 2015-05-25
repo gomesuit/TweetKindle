@@ -35,7 +35,7 @@ public class KindleTitleConvertBatch implements Job {
     	List<Kindle> kindleList = KindleBO.getAllKindleList();
     	
     	for(Kindle kindle : kindleList){
-    		KindleMyInfo kindleMyinfo = TitleConvert.KindleToKindleMyInfo(kindle);
+    		KindleMyInfo kindleMyinfo = new TitleConvert().KindleToKindleMyInfo(kindle);
         	KindleBO.registerKindleMyinfo(kindleMyinfo);
     	}
     }
