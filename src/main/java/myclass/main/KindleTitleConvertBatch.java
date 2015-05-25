@@ -19,11 +19,13 @@ public class KindleTitleConvertBatch implements Job {
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
     	logger.info("==============Start KindleTitleConvertBatch==============");
+    	kindleBO = new KindleBO();
     	try {
     		exec();
 		} catch (Exception e) {
             logger.error("Exception of KindleTitleConvertBatch", e);
 		}
+    	kindleBO = null;
     	logger.info("==============End KindleTitleConvertBatch==============");
 	}
 
@@ -34,6 +36,7 @@ public class KindleTitleConvertBatch implements Job {
     		KindleMyInfo kindleMyinfo = new TitleConvert().KindleToKindleMyInfo(kindle);
     		kindleBO.registerKindleMyinfo(kindleMyinfo);
     	}
+    	kindleList = null;
     }
     
     

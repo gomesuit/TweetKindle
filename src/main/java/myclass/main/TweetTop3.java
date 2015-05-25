@@ -33,13 +33,15 @@ import twitter4j.UploadedMedia;
 
 public class TweetTop3 implements Job {
     private static Logger logger = LogManager.getLogger(TweetTop3.class);
-    private KindleBO kindleBO = new KindleBO();
+    private KindleBO kindleBO;
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		exec();
 	}
     
     public void exec() {
+    	kindleBO = new KindleBO();
+    	
     	logger.info("【Kindleベストセラー】ツイート処理開始");
     	String headerTitle = "【Kindleベストセラー】";
     	String description = "";
@@ -91,7 +93,7 @@ public class TweetTop3 implements Job {
 		}else{
 			logger.info("最終ツイートから2時間経過してません。");
 		}
-		
+		kindleBO = null;
     }
     
     private String cutStr(String str, int num){

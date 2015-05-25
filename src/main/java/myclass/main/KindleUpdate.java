@@ -15,15 +15,17 @@ import org.quartz.JobExecutionException;
 public class KindleUpdate implements Job {
     private static Logger logger = LogManager.getLogger(KindleUpdate.class);
     private static final int UPDATE_NUM = 500;
-    private KindleBO kindleBO = new KindleBO();
+    private KindleBO kindleBO;
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
     	logger.info("==============Start KindleUpdate==============");
+    	kindleBO = new KindleBO();
     	try {
     		exec();
 		} catch (Exception e) {
             logger.error("Exception of KindleUpdate", e);
 		}
+    	kindleBO = null;
     	logger.info("==============End KindleUpdate==============");
 	}
 

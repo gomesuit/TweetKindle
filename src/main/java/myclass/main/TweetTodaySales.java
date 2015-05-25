@@ -19,13 +19,14 @@ import org.quartz.JobExecutionException;
 public class TweetTodaySales implements Job 
 {
     private static Logger logger = LogManager.getLogger(TweetTodaySales.class);
-    private KindleBO kindleBO = new KindleBO();
+    private KindleBO kindleBO;
     
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		exec();
 	}
     
     public void exec(){
+    	kindleBO = new KindleBO();
 
     	Map<String,String> map;
     	map = kindleBO.getKindleTodaySale();
@@ -67,6 +68,7 @@ public class TweetTodaySales implements Job
 	        	kindleBO.updateTweetTodaySales(map.get("asin"));
 	        }
         }
+        kindleBO = null;
     }
 
     private String cutStr(String str, int num){

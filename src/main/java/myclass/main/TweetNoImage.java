@@ -19,13 +19,15 @@ import org.quartz.JobExecutionException;
 public class TweetNoImage implements Job 
 {
     private static Logger logger = LogManager.getLogger(TweetNoImage.class);
-    private KindleBO kindleBO = new KindleBO();
+    private KindleBO kindleBO;
     
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		exec();
 	}
     
     public void exec(){
+    	kindleBO = new KindleBO();
+    	
     	String asin = kindleBO.getNoImage();
     	if(asin == null){
     		logger.info("画像更新が一件もありませんでした。");
@@ -66,6 +68,7 @@ public class TweetNoImage implements Job
 	        	kindleBO.deleteNoImage(map.get("asin"));
 	        }
     	}
+    	kindleBO = null;
     }
 
     private String cutStr(String str, int num){

@@ -15,15 +15,17 @@ import org.quartz.JobExecutionException;
 
 public class KindleCollectFromHtml implements Job {
     private static Logger logger = LogManager.getLogger(KindleCollectFromHtml.class);
-    private KindleBO kindleBO = new KindleBO();
+    private KindleBO kindleBO;
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
     	logger.info("==============Start KindleCollectFromHtml==============");
+    	kindleBO = new KindleBO();
     	try {
 			exec();
 		} catch (Exception e) {
             logger.error("Exception of KindleCollectFromHtml", e);
 		}
+    	kindleBO = null;
     	logger.info("==============End KindleCollectFromHtml==============");
 	}
 
@@ -34,6 +36,8 @@ public class KindleCollectFromHtml implements Job {
     	logger.debug("newKindleList {}", newKindleList);
     	kindleBO.registerKindleList(newKindleList);
     	logger.info("{}件の登録が完了しました。", newKindleList.size());
+    	asinList = null;
+    	newKindleList = null;
     }
     
     private List<Kindle> getNewKindleListFromAsinList(List<String> asinList) {

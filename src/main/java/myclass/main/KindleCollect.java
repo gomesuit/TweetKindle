@@ -17,7 +17,7 @@ public class KindleCollect implements Job {
     private List<String> sortValueList;
     private List<String> browseNodesList;
     private List<String> powerPubdatesList;
-    private KindleBO kindleBO = new KindleBO();
+    private KindleBO kindleBO;
 
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		exec();
@@ -25,12 +25,14 @@ public class KindleCollect implements Job {
     
     public void exec() {
     	logger.info("==============Start KindleCollect==============");
+    	kindleBO = new KindleBO();
     	try {
 			collectBooks();
 	    	collectKindleStore();
 		} catch (Exception e) {
             logger.error("Exception of KindleCollect", e);
 		}
+    	kindleBO = null;
     	logger.info("==============End KindleCollect==============");
     }
 
