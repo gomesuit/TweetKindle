@@ -110,7 +110,8 @@
 		update
 			KindleRegist
 		set
-			updateTime = NOW()
+			updateTime = NOW(),
+			deleteTime = null
 		where
 			asin = #{asin}
 	</update>
