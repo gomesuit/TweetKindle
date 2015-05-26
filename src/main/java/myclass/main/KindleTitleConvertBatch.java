@@ -1,10 +1,10 @@
 package myclass.main;
 
 import java.util.List;
+import java.util.Map;
 
 import myclass.bo.KindleBO;
 import myclass.function.TitleConvert;
-import myclass.model.Kindle;
 import myclass.model.KindleMyInfo;
 
 import org.apache.logging.log4j.LogManager;
@@ -30,10 +30,10 @@ public class KindleTitleConvertBatch implements Job {
 	}
 
 	public void exec() throws Exception{
-    	List<Kindle> kindleList = new KindleBO().getAllKindleList();
+		List<Map<String, String>> kindleList = new KindleBO().getAllKindleList();
     	
-    	for(Kindle kindle : kindleList){
-    		KindleMyInfo kindleMyinfo = new TitleConvert().KindleToKindleMyInfo(kindle);
+    	for(Map<String, String> kindle : kindleList){
+    		KindleMyInfo kindleMyinfo = new TitleConvert().KindleToKindleMyInfo(kindle.get("asin"), kindle.get("title"));
     		kindleBO.registerKindleMyinfo(kindleMyinfo);
     	}
     	kindleList = null;

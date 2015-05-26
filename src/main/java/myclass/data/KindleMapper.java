@@ -31,7 +31,7 @@ public interface KindleMapper {
   void deleteNoImage(String asin);
   List<String> selectOldAsinList(Map<String,Object> map);
   void deleteKindleRegist(String asin);
-  List<Kindle> selectAllKindleList();
+  List<Map<String, String>> selectAllKindleTitleList();
   void insertKindleMyInfo(KindleMyInfo kindleMyinfo);
   void updateKindleMyInfo(KindleMyInfo kindleMyinfo);
   int countKindleMyInfo(String asin);

@@ -58,7 +58,7 @@ public class KindleBO {
         }else{
         	kindleMapper.updateKindleRegist(kindle.getAsin());
         }
-        registerKindleMyinfo(new TitleConvert().KindleToKindleMyInfo(kindle));
+        registerKindleMyinfo(new TitleConvert().KindleToKindleMyInfo(kindle.getAsin(), kindle.getTitle()));
     }
 
     public void registerKindleList(List<Kindle> kindleList){
@@ -162,8 +162,8 @@ public class KindleBO {
         }
     }
 
-    public List<Kindle> getAllKindleList(){
-    	return kindleMapper.selectAllKindleList();
+    public List<Map<String, String>> getAllKindleList(){
+    	return kindleMapper.selectAllKindleTitleList();
     }
 
     public void registerKindleMyinfo(KindleMyInfo kindleMyinfo){

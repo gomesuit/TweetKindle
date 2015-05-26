@@ -268,9 +268,10 @@
 			asin = #{asin}
 	</update>
 
-	<select id="selectAllKindleList" resultType="myclass.model.Kindle">
+	<select id="selectAllKindleTitleList" resultType="java.util.Map">
 		select
-			*
+			asin,
+			title
 		from
 			Kindle
 	</select>
