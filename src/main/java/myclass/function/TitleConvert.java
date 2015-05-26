@@ -43,13 +43,15 @@ public class TitleConvert {
     }
 
     private boolean isMagazine(String title){
-    	String regex = "\\[雑誌\\]";
-    	regex += "|[０１２３４５６７８９0-9]+年[０１２３４５６７８９0-9]+月号";
-    	regex += "|月刊";
-    	regex += "|No\\.[0-9]+（[0-9]+年）";
-    	regex += "|[0-9]+月新刊";
-    	regex += "|[0-9]+月号";
-    	regex += "|Amusement Life Magazine";
+    	StringBuffer buffer = new StringBuffer();
+    	buffer.append("\\[雑誌\\]");
+    	buffer.append("|[０１２３４５６７８９0-9]+年[０１２３４５６７８９0-9]+月号");
+    	buffer.append("|月刊");
+    	buffer.append("|No\\.[0-9]+（[0-9]+年）");
+    	buffer.append("|[0-9]+月新刊");
+    	buffer.append("|[0-9]+月号");
+    	buffer.append("|Amusement Life Magazine");
+    	String regex = buffer.toString();
     	Pattern p = Pattern.compile(regex);
     	Matcher m = p.matcher(title);
     	
@@ -252,15 +254,6 @@ public class TitleConvert {
     	StringBuffer buffer = new StringBuffer();
 
     	String result = string;
-//    	result = result.replaceAll("【】", "");
-//    	result = result.replaceAll("\\[\\]", "");
-//    	result = result.replaceAll("〔〕", "");
-//    	result = result.replaceAll("<>", "");
-//    	result = result.replaceAll("<>", "");
-//    	result = result.replaceAll("〈〉", "");
-//    	result = result.replaceAll("（）", "");
-//    	result = result.replaceAll("\\(\\)", "");
-//    	result = result.replaceAll("［］", "");
     	buffer.append("【】");
     	buffer.append("|\\[\\]");
     	buffer.append("|〔〕");
@@ -359,85 +352,7 @@ public class TitleConvert {
     	buffer.append("|モノクロ版");
     	buffer.append("|無料お試し版");
     	buffer.append("|合体版");
-    	
     	result = result.replaceAll(buffer.toString(), " ");
-    	
-//    	result = result.replaceAll("【期間限定 無料お試し版】", "");
-//    	result = result.replaceAll("【期間限定無料】", "");
-//    	result = result.replaceAll("\\[まとめ買い\\]", "");
-//    	result = result.replaceAll("\\[まとめ買い\\]", "");
-//    	result = result.replaceAll("【フルカラー】", "");
-//    	result = result.replaceAll("【カラーコミック】", "");
-//    	result = result.replaceAll("【合本版】", "");
-//    	result = result.replaceAll("\\[カラー版\\]", "");
-//    	result = result.replaceAll("\\[モノクロ版\\]", "");
-//    	result = result.replaceAll("\\[無料版\\]", "");
-//    	result = result.replaceAll("〔完〕", "");
-//    	result = result.replaceAll("<特典付>", "");
-//    	result = result.replaceAll("【新装版】", "");
-//    	result = result.replaceAll("【特別付録付】", "");
-//    	result = result.replaceAll("【電子早読み版】", "");
-//    	result = result.replaceAll("【電子限定おまけ付き】", "");
-//    	result = result.replaceAll("【無料連載版】", "");
-//    	result = result.replaceAll("【日・英翻訳版】", "");
-//    	result = result.replaceAll("【電子版】", "");
-//    	result = result.replaceAll("\\-電子版\\-", "");
-//    	result = result.replaceAll("【電子特別版】", "");
-//    	result = result.replaceAll("【カラーイラスト版】", "");
-//    	result = result.replaceAll("【電子限定版】", "");
-//    	result = result.replaceAll("【電子版限定】", "");
-//    	result = result.replaceAll("【電子再編版】", "");
-//    	result = result.replaceAll("【お試し版】", "");
-//    	result = result.replaceAll("【全巻セット】", "");
-//    	result = result.replaceAll("【無料】", "");
-//    	result = result.replaceAll("【無料版】", "");
-//    	result = result.replaceAll("【おためし版】", "");
-//    	result = result.replaceAll("【アクセスコード付き】", "");
-//    	result = result.replaceAll("【通常版】", "");
-//    	result = result.replaceAll("【分冊版】", "");
-//    	result = result.replaceAll("【期間限定】", "");
-//    	result = result.replaceAll("【イラスト入り】", "");
-//    	result = result.replaceAll("【デジタル・修正版】", "");
-//    	result = result.replaceAll("【マンガ版】", "");
-//    	result = result.replaceAll("【マンガ訳】", "");
-//    	result = result.replaceAll("【フルカラーコミック】", "");
-//    	result = result.replaceAll("【フルカラー特装版】", "");
-//    	result = result.replaceAll("【特典小冊子つき】", "");
-//    	result = result.replaceAll("【第１話お試し読み】 ", "");
-//    	result = result.replaceAll("【電子オリジナル】", "");
-//    	result = result.replaceAll("【イラスト付】", "");
-//    	result = result.replaceAll("【電子限定】", "");
-//    	result = result.replaceAll("【電子限定かきおろし付】", "");
-//    	result = result.replaceAll("【電子再編】", "");
-//    	result = result.replaceAll("【期間限定】", "");
-//    	result = result.replaceAll("【電子限定かきおろしペーパー付】", "");
-//    	result = result.replaceAll("【試し読み小冊子】", "");
-//    	result = result.replaceAll("【第１話無料配信版】", "");
-//    	result = result.replaceAll("【電子版お試し読み小冊子】", "");
-//    	result = result.replaceAll("【デジタル版限定描き下ろしマンガ付】", "");
-//    	result = result.replaceAll("【電子限定完全版】", "");
-//    	result = result.replaceAll("【期間限定無料お試し版】", "");
-//    	result = result.replaceAll("〈豪華特典版〉", "");
-//    	result = result.replaceAll("〔新装版〕", "");
-//    	result = result.replaceAll("（完全版）", "");
-//    	result = result.replaceAll("〔完全版〕", "");
-//    	result = result.replaceAll("〔ワイド〕", "");
-//    	result = result.replaceAll("（フルカラー）", "");
-//    	result = result.replaceAll("〈電子特別版〉", "");
-//    	result = result.replaceAll("（イラスト完全版）", "");
-//    	result = result.replaceAll("\\(コミック版\\)", "");
-//    	result = result.replaceAll("リマスター版", "");
-//    	result = result.replaceAll("\\[シリーズ\\]", "");
-//    	result = result.replaceAll("\\[コミック\\]", "");
-//    	result = result.replaceAll("［合本版］", "");
-//    	result = result.replaceAll("新装版", "");
-//    	result = result.replaceAll("完全版", "");
-//    	result = result.replaceAll("無料ダイジェスト版", "");
-//    	result = result.replaceAll("オールカラー版", "");
-//    	result = result.replaceAll("カラー版", "");
-//    	result = result.replaceAll("モノクロ版", "");
-//    	result = result.replaceAll("無料お試し版", "");
-//    	result = result.replaceAll("合体版", "");
     	result = result.trim();
 		
 		return result;
@@ -468,18 +383,6 @@ public class TitleConvert {
     	
     	result = result.replaceAll("[:：]$", "");
     	result = result.replaceAll(">$", "");
-    	
-//    	result = result.replaceAll("[第全 ][１２３４５６７８９０0-9]+巻", "");
-//    	result = result.replaceAll("[（\\(][１２３４５６７８９０0-9]+[）\\)]", "");
-//    	result = result.replaceAll(" [１２３４５６７８９０0-9]+$", "");
-//    	result = result.replaceAll("\\([１２３４５６７８９０0-9]+\\-[１２３４５６７８９０0-9]+\\)$", "");
-//    	result = result.replaceAll("[.１２３４５６７８９０0-9]+巻$", "");
-//    	result = result.replaceAll(" [上中下]巻", "");
-//    	result = result.replaceAll("[（\\(][上中下][）\\)]", "");
-//    	result = result.replaceAll(" [上中下]$", "");
-//    	result = result.replaceAll("\\[[上中下]\\]$", "");
-//    	result = result.replaceAll("[（\\(][前中後]編[）\\)]$", "");
-//    	result = result.replaceAll(" \\[vV\\]\\[oO\\]\\[lL\\]\\.[１２３４５６７８９０0-9]+$", "");
     	
     	result = deleteParentheses(result);
     	
