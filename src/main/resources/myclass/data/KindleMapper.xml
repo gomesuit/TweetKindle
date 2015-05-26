@@ -253,7 +253,6 @@
 			Kindle K, KindleRegist R
 		where
 			K.asin = R.asin and
-			R.deleteTime is null and
 			R.updateTime &lt; #{yesterday}
 		order by
 			R.updateTime asc
