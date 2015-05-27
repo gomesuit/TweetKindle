@@ -19,7 +19,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-@SuppressWarnings("restriction")
 public class AmazonApiKindle {
     private static Logger logger = LogManager.getLogger(AmazonApiKindle.class);
     @SuppressWarnings("unused")

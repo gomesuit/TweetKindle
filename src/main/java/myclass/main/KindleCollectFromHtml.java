@@ -32,12 +32,12 @@ public class KindleCollectFromHtml implements Job {
     public void exec() throws Exception{
     	List<String> asinList = AmazonApiKindle.getAsinListFromHtml();
     	logger.debug("asinList {}", asinList);
+    	
     	List<Kindle> newKindleList = getNewKindleListFromAsinList(asinList);
     	logger.debug("newKindleList {}", newKindleList);
+    	
     	kindleBO.registerKindleList(newKindleList);
     	logger.info("{}件の登録が完了しました。", newKindleList.size());
-    	asinList = null;
-    	newKindleList = null;
     }
     
     private List<Kindle> getNewKindleListFromAsinList(List<String> asinList) {

@@ -14,7 +14,6 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-import twitter4j.Status;
 import twitter4j.StatusUpdate;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
@@ -48,7 +47,7 @@ public class TweetOne implements Job {
 		        String filePath = DownloadImage.getImagePath(kindle.getLargeImage(), kindle.getAsin());
 		        update.setMedia(new File(filePath));
 		        
-				Status status = twitter.updateStatus(update);
+				twitter.updateStatus(update);
 	            logger.info("新着ツイートが正常終了しました。{}", kindle.getAsin(), tweetContent);
 	    	}catch(Exception e){
 	            String message = "";

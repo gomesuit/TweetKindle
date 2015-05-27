@@ -3,7 +3,6 @@ package myclass.function;
 import java.util.HashMap;
 import java.util.Map;
 
-import myclass.bo.KindleBO;
 import myclass.config.MyConfig;
 
 import org.apache.logging.log4j.LogManager;
