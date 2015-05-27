@@ -163,6 +163,11 @@ public class TitleConvert {
     	buffer.append("|あすかコミックスCL-DX");
     	buffer.append("|何度も");
     	buffer.append("|朝まで");
+    	buffer.append("|寝取り");
+    	buffer.append("|孕ませ");
+    	buffer.append("|鬼畜");
+    	buffer.append("|白濁");
+    	buffer.append("|drapコミックス");
     	
     	buffer.append("|マンガ日本の歴史");
     	String regex = buffer.toString();
