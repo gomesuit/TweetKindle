@@ -167,7 +167,17 @@ public class TitleConvert {
     	buffer.append("|孕ませ");
     	buffer.append("|鬼畜");
     	buffer.append("|白濁");
+    	buffer.append("|AV");
+    	buffer.append("|イっちゃう");
     	buffer.append("|drapコミックス");
+    	buffer.append("|素敵なロマンスコミック");
+    	buffer.append("|密会");
+    	buffer.append("|脱い");
+    	buffer.append("|快楽");
+    	buffer.append("|裸の");
+    	buffer.append("|禁断");
+    	buffer.append("|恋愛楽園PURE");
+    	buffer.append("|ハーレム");
     	
     	buffer.append("|マンガ日本の歴史");
     	String regex = buffer.toString();
