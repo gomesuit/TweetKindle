@@ -178,6 +178,28 @@ public class TitleConvert {
     	buffer.append("|禁断");
     	buffer.append("|恋愛楽園PURE");
     	buffer.append("|ハーレム");
+    	buffer.append("|ヌけ");
+    	buffer.append("|身体");
+    	buffer.append("|支配");
+    	buffer.append("|危険日");
+    	buffer.append("|ハメられ");
+    	buffer.append("|すっぽんぽん");
+    	buffer.append("|秘宝館");
+    	buffer.append("|ハメハメ");
+    	buffer.append("|パイパイ");
+    	buffer.append("|ちゅっちゅ");
+    	buffer.append("|ワレメ");
+    	buffer.append("|奥まで");
+    	buffer.append("|咥え");
+    	buffer.append("|KATTS-L");
+    	buffer.append("|新妻");
+    	buffer.append("|マワされ");
+    	buffer.append("|ガチイキ");
+    	buffer.append("|ハメまくり");
+    	buffer.append("|ヤレちゃう");
+    	buffer.append("|Chara COMICS");
+    	buffer.append("|ＡＶ");
+    	buffer.append("|恋愛体験CANDY KISS");
     	
     	buffer.append("|マンガ日本の歴史");
     	String regex = buffer.toString();
