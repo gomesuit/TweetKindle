@@ -256,6 +256,10 @@ public class TitleConvert {
     	buffer.append("|MOOG COMICS");
     	buffer.append("|onBLUE comics");
     	buffer.append("|ドレイ");
+    	buffer.append("|SEX");
+    	buffer.append("|シャワールーム");
+    	buffer.append("|交わり");
+    	buffer.append("|不倫");
     	
     	buffer.append("|マンガ日本の歴史");
     	String regex = buffer.toString();
