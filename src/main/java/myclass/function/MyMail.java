@@ -3,7 +3,6 @@ package myclass.function;
 import java.util.Properties;
 
 import javax.mail.Message;
-import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
@@ -13,8 +12,6 @@ import myclass.config.MyConfig;
 
 public class MyMail{
 	private static Properties property;
-	private static final String SMTP_ACCOUNT = MyConfig.getConfig("MyMail.smtpAccount");
-	private static final String SMTP_PASSWORD = MyConfig.getConfig("MyMail.smtpPassword");
 	private static final String TO_MAIL_ADDRESS = MyConfig.getConfig("MyMail.toMailAddress");
 	private static final String TO_PERSONAL_NAME = MyConfig.getConfig("MyMail.toPersonalName");
 	private static final String FROM_MAIL_ADDRESS = MyConfig.getConfig("MyMail.fromMailAddress");
@@ -33,11 +30,7 @@ public class MyMail{
     }
 	
     public static void sendMail(String title, String message) throws Exception{
-        Session session = Session.getInstance(property, new javax.mail.Authenticator(){
-            protected PasswordAuthentication getPasswordAuthentication(){
-                return new PasswordAuthentication(SMTP_ACCOUNT, SMTP_PASSWORD);
-            }
-        });
+        Session session = Session.getInstance(property);
 
         InternetAddress toAddress = new InternetAddress(TO_MAIL_ADDRESS, TO_PERSONAL_NAME);
         InternetAddress fromAddress = new InternetAddress(FROM_MAIL_ADDRESS, FROM_PERSONAL_NAME);
